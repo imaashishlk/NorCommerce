@@ -1,3 +1,7 @@
 <Solution>
+  <Project Path="NorCommerce.Business/NorCommerce.Business.csproj" />
+  <Project Path="NorCommerce.DataAccess/NorCommerce.DataAccess.csproj" />
+  <Project Path="NorCommerce.Models/NorCommerce.Models.csproj" />
+  <Project Path="NorCommerce.Utility/NorCommerce.Utility.csproj" />
   <Project Path="NorCommerceWeb/NorCommerceWeb.csproj" />
 </Solution>

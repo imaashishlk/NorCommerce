@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using NorCommerceWeb.Data;
+using NorCommerce.DataAccess.Data;
+using NorCommerce.Business.Services;
+using NorCommerce.Business.Services.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ var test = builder.Configuration.GetConnectionString("SQLConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
+
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 
@@ -29,8 +33,14 @@ app.UseAuthorization();
 app.MapStaticAssets();
 
 app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
+    .WithStaticAssets();
+
+app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Home}/{action=Index}/{id?}",
+    defaults: new { area = "Customer" })
     .WithStaticAssets();
 
 
