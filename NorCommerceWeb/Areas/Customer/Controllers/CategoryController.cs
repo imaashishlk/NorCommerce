@@ -1,24 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using NorCommerceWeb.Data;
-using NorCommerceWeb.Models;
+using NorCommerce.DataAccess.Data;
+using NorCommerce.Models;
+using NorCommerce.Business.Services.IServices;
 
-namespace NorCommerceWeb.Controllers
+namespace NorCommerceWeb.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public CategoryController(ApplicationDbContext context)
+        private readonly ICategoryService _service;
+        public CategoryController(ICategoryService service)
         {
-            _context = context;
+            _service = service;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var categories = _context.Categories.ToList();
+            var categories = await _service.GetAllCategoriesAsync();
             return View("Index",categories);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View("Create");
         }
@@ -26,16 +28,15 @@ namespace NorCommerceWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Create")]
-        public IActionResult CreatePOST(Category category)
+        public async Task<IActionResult> CreatePOST(Category category)
         {
-            if (!String.IsNullOrEmpty(category.Name) && _context.Categories.Any(c => c.Name.ToLower() == category.Name.ToLower()))
+            if (!String.IsNullOrEmpty(category.Name) && await _service.IsCategoryNameUniqueAsync(category.Name, null))
             {
                 ModelState.AddModelError("Name", "Category already exists.");
             }
 
             if (ModelState.IsValid) {
-                _context.Categories.Add(category);
-                _context.SaveChanges();
+                await _service.CreateCategoryAsync(category);
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
@@ -43,14 +44,14 @@ namespace NorCommerceWeb.Controllers
             return View();
         }
 
-        public IActionResult Update(int? id)
+        public async Task<IActionResult> Update(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
             
-            var category = _context.Categories.Find(id);
+            var category = await _service.GetCategoryByIdAsync(id.Value);
 
             if (category == null)
             {
@@ -63,17 +64,16 @@ namespace NorCommerceWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Update")]
-        public IActionResult UpdatePOST(Category category)
+        public async Task<IActionResult> UpdatePOST(Category category)
         {
-            if (!String.IsNullOrEmpty(category.Name) && _context.Categories.Any(c => c.Name.ToLower() == category.Name.ToLower() && c.Id != category.Id))
+            if (!String.IsNullOrEmpty(category.Name) && await _service.IsCategoryNameUniqueAsync(category.Name, category.Id))
             {
                 ModelState.AddModelError("Name", "Category already exists.");
             }
 
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(category);
-                _context.SaveChanges();
+                await _service.UpdateCategoryAsync(category);
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
@@ -81,14 +81,14 @@ namespace NorCommerceWeb.Controllers
             return View();
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
 
-            var category = _context.Categories.Find(id);
+            var category = await _service.GetCategoryByIdAsync(id.Value);
 
             if (category == null)
             {
@@ -101,18 +101,17 @@ namespace NorCommerceWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        public IActionResult DeletePOST(int id)
+        public async Task<IActionResult> DeletePOST(int id)
         {
 
-            var category = _context.Categories.Find(id);
+            var category = await _service.GetCategoryByIdAsync(id);
 
             if (category == null)
             {
                 return NotFound();
             }
 
-            _context.Categories.Remove(category);
-            _context.SaveChanges();
+            await _service.DeleteCategoryAsync(id);
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
 

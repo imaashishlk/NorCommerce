@@ -14,4 +14,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NorCommerce.Business\NorCommerce.Business.csproj" />
+    <ProjectReference Include="..\NorCommerce.DataAccess\NorCommerce.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
+  </ItemGroup>
+
 </Project>

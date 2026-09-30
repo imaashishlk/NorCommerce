@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NorCommerce.DataAccess\NorCommerce.DataAccess.csproj" />
+    <ProjectReference Include="..\NorCommerce.Models\NorCommerce.Models.csproj" />
+    <ProjectReference Include="..\NorCommerce.Utility\NorCommerce.Utility.csproj" />
+  </ItemGroup>
+
 </Project>

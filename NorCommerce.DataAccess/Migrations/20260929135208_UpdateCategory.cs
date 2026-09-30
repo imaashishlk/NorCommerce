@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace NorCommerceWeb.Migrations
+namespace NorCommerce.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class UpdateCategory : Migration

@@ -2,17 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NorCommerceWeb.Data;
+using NorCommerce.DataAccess.Data;
 
 #nullable disable
 
-namespace NorCommerceWeb.Migrations
+namespace NorCommerce.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260929134423_SeedCategoryTable")]
+    partial class SeedCategoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,13 +32,9 @@ namespace NorCommerceWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -45,19 +44,16 @@ namespace NorCommerceWeb.Migrations
                         new
                         {
                             Id = 1,
-                            DisplayOrder = 1,
                             Name = "Electronics"
                         },
                         new
                         {
                             Id = 2,
-                            DisplayOrder = 2,
                             Name = "Books"
                         },
                         new
                         {
                             Id = 3,
-                            DisplayOrder = 3,
                             Name = "Clothing"
                         });
                 });

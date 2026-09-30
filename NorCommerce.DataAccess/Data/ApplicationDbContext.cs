@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NorCommerceWeb.Models;
+using NorCommerce.Models;
 
-namespace NorCommerceWeb.Data
+namespace NorCommerce.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {
