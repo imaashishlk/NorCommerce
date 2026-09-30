@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using NorCommerceWeb.Models;
-using System.Diagnostics;
 
 namespace NorCommerceWeb.Controllers
 {
@@ -14,12 +12,6 @@ namespace NorCommerceWeb.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
