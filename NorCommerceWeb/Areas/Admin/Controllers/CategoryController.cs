@@ -4,9 +4,9 @@ using NorCommerce.DataAccess.Data;
 using NorCommerce.Models;
 using NorCommerce.Business.Services.IServices;
 
-namespace NorCommerceWeb.Areas.Customer.Controllers
+namespace NorCommerceWeb.Areas.Admin.Controllers
 {
-    [Area("Customer")]
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _service;

@@ -1043,3 +1043,20 @@ div.dt-container div.dt-info {
     #themeToggle:hover {
         transform: rotate(25deg);
     }
+
+/* Keep all columns left-aligned, including ones DataTables detects as numbers or dates */
+table.dataTable thead th,
+table.dataTable tbody td:not(.dt-empty) {
+    text-align: left !important;
+}
+
+    /* Newer DataTables 2.x reverses the title and sort icon on numeric columns */
+    table.dataTable thead th.dt-type-numeric div.dt-column-header,
+    table.dataTable thead th.dt-type-date div.dt-column-header {
+        flex-direction: row !important;
+    }
+
+/* Keep action buttons on one line */
+#productTable td:last-child {
+    white-space: nowrap;
+}

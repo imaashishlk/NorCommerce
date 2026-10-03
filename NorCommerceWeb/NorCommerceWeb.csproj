@@ -19,8 +19,4 @@
     <ProjectReference Include="..\NorCommerce.DataAccess\NorCommerce.DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
-  </ItemGroup>
-
 </Project>
