@@ -1,8 +1,68 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using NorCommerce.Models
+@model IEnumerable<Product>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<partial name="_Hero" />
+
+<div class="container py-5" id="catalog">
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1" style="color: #13294B;">Our Collection</h2>
+        <p class="text-secondary mb-0">Explore all @Model.Count() books in our catalog</p>
+    </div>
+
+    <!-- Books Grid -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+        @if (Model != null && Model.Any())
+        {
+            foreach (var product in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 border shadow-sm book-card">
+                        <a asp-action="Details" asp-route-productId="@product.Id" class="text-decoration-none">
+                            <div style="aspect-ratio: 3/4; overflow: hidden;">
+                                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                {
+                                    <img src="@product.ImageUrl" alt="@product.Title" class="w-100 h-100 object-fit-cover" />
+                                }
+                                else
+                                {
+                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light">
+                                        <i class="bi bi-book display-3 text-secondary"></i>
+                                    </div>
+                                }
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <span class="badge bg-secondary mb-2">@product.Category?.Name</span>
+                            <h6 class="card-title fw-semibold mb-2" style="min-height: 2.5rem;">
+                                <a asp-action="Details" asp-route-productId="@product.Id" class="text-decoration-none text-dark">
+                                    @product.Title
+                                </a>
+                            </h6>
+                            <p class="text-secondary small mb-2">by @product.Author</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="fw-bold" style="color: #13294D;">@product.Price.ToString("c")</span>
+                                    @if (product.ListPrice > product.Price)
+                                    {
+                                        <small class="text-decoration-line-through text-muted ms-1">@product.ListPrice.ToString("c")</small>
+                                    }
+                                </div>
+                                <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-sm btn-outline-dark">
+                                    View
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No products available at the moment.</p>
+        }
+
+    </div>
 </div>
+
+<partial name="_Newsletter" />
