@@ -6,6 +6,7 @@ using NorCommerce.Business.Services.IServices;
 using NorCommerce.DataAccess.Data;
 using NorCommerce.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Eventing.Reader;
 
 namespace NorCommerce.Business.Services
 {
@@ -16,14 +17,28 @@ namespace NorCommerce.Business.Services
         {
             _context = context;
         }
-        public async Task<Product?> GetProductByIdAsync(int id)
+        public async Task<Product?> GetProductByIdAsync(int id, bool includeCategories = false)
         {
-            return await _context.Products.FindAsync(id);
+            if (includeCategories)
+            {
+                return await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            }
+            else
+            {
+                return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            }
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync(bool includeCategories = false)
         {
-            return await _context.Products.ToListAsync();
+            if (includeCategories)
+            {
+                return await _context.Products.Include(p => p.Category).ToListAsync();
+            }
+            else
+            {
+                return await _context.Products.ToListAsync();
+            }
         }
 
         public async Task<Product> CreateProductAsync(Product Product)
