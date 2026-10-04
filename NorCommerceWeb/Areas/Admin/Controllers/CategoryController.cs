@@ -3,10 +3,12 @@ using Microsoft.IdentityModel.Tokens;
 using NorCommerce.DataAccess.Data;
 using NorCommerce.Models;
 using NorCommerce.Business.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NorCommerceWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _service;
