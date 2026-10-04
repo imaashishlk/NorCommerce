@@ -43,6 +43,40 @@
                             <a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="Index">Products</a>
                         </li>
                     </ul>
+
+                    <!-- Login and register, on the right -->
+                    <ul class="navbar-nav align-items-lg-center gap-2">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle fs-5" style="color: #FF6B6B;"></i>
+                                    <span class="small">@User.Identity.Name</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                    <li>
+                                        <form asp-area="Identity" asp-controller="Account" asp-action="Logout" method="post">
+                                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2">
+                                                <i class="bi bi-box-arrow-right" style="color: #C8102E;"></i> Logout
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-sm btn-accent fw-semibold" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+                            </li>
+                        }
+
+                    </ul>
+                    <!-- END -->
                 </div>
             </div>
         </nav>

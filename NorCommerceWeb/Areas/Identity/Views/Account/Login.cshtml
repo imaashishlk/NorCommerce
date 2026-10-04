@@ -1,0 +1,62 @@
+﻿@using NorCommerce.Models.ViewModels;
+@model LoginVM
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border overflow-hidden">
+                <div class="card-header text-white py-3 px-4 text-center" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
+                    <i class="bi bi-box-arrow-in-right display-4"></i>
+                    <h4 class="fw-bold mt-2 mb-1">Welcome Back</h4>
+                    <p class="mb-0 small" style="color: #A9C1E3;">Log in to your account</p>
+                </div>
+
+                <div class="card-body p-5">
+                    <form method="POST" asp-controller="Account" asp-action="Login" asp-route-returnURL="@ViewData["ReturnURL"]">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small" asp-for="Email"></label>
+                            <input type="text" name="Email" asp-for="Email" class="form-control form-control-lg" placeholder="name@example.com" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small" asp-for="Password">Password</label>
+                            <input type="password" asp-for="Password" class="form-control form-control-lg" placeholder="Enter your password" />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" asp-for="RememberMe" />
+                            <label class="form-check-label" asp-for="RememberMe">Remember me?</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-accent btn-lg w-100 mb-3">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Log In
+                        </button>
+
+                        <div class="text-center">
+                            <a href="#" class="text-decoration-none" style="color: #1F4E8C;">Forgot your password?</a>
+                        </div>
+                    </form>
+
+                    <hr class="my-4" />
+
+                    <div class="text-center">
+                        <!-- TODO: Add Link -->
+                        <p class="mb-0">Don't have an account? <a asp-controller="Account" asp-action="Register" asp-route-returnURL="@ViewData["ReturnURL"]@123" class="fw-semibold text-decoration-none" style="color: #C8102E;">Register now</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
