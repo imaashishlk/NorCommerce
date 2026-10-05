@@ -21,14 +21,12 @@
                         <div class="text-danger mb-3" asp-validation-summary="ModelOnly"></div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <!-- TODO: Add label, input and validation tag helper for Name property -->
                                 <label asp-for="Name"></label>
                                 <input asp-for="Name" type="text" class="form-control" placeholder="Ola Nordmann" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <!-- TODO: Add label, input and validation tag helper for Email property -->
                                 <label asp-for="Email"></label>
                                 <input asp-for="Email" type="email" class="form-control" placeholder="ola.nordmann@example.no" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
@@ -37,14 +35,12 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <!-- TODO: Add label, input and validation tag helper for Password property -->
                                 <label asp-for="Password"></label>
                                 <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" />
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <!-- TODO: Add label, input and validation tag helper for ConfirmPassword property -->
                                 <label asp-for="ConfirmPassword"></label>
                                 <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="••••••••" />
                                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
@@ -52,14 +48,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <!-- TODO: Add label, input and validation tag helper for PhoneNumber property -->
                             <label asp-for="PhoneNumber"></label>
                             <input asp-for="PhoneNumber" type="tel" class="form-control" placeholder="+47 912 34 567" />
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
-                            <!-- TODO: Add label, input and validation tag helper for StreetAddress property -->
                             <label asp-for="StreetAddress"></label>
                             <input asp-for="StreetAddress" type="text" class="form-control" placeholder="Kirkegata 15" />
                             <span asp-validation-for="StreetAddress" class="text-danger"></span>
@@ -67,25 +61,31 @@
 
                         <div class="row">
                             <div class="col-md-3 mb-3">
-                                <!-- TODO: Add label, input and validation tag helper for PostalCode property -->
                                 <label asp-for="PostalCode"></label>
                                 <input asp-for="PostalCode" type="text" class="form-control" placeholder="4006" maxlength="4" inputmode="numeric" />
                                 <span asp-validation-for="PostalCode" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-5 mb-3">
-                                <!-- TODO: Add label, input and validation tag helper for City property -->
                                 <label asp-for="City"></label>
                                 <input asp-for="City" type="text" class="form-control" placeholder="Stavanger" />
                                 <span asp-validation-for="City" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-4 mb-3">
-                                <!-- TODO: Add label, input and validation tag helper for State property -->
                                 <label asp-for="State"></label>
                                 <input asp-for="State" type="text" class="form-control" placeholder="Rogaland" />
                                 <span asp-validation-for="State" class="text-danger"></span>
                             </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label asp-for="Role"></label>
+                                <select asp-for="Role" asp-items="Model.RoleList" class="form-select">
+                                    <option disabled selected>-- Select Role --</option>
+                                </select>
+                                <span asp-validation-for="Role" class="text-danger"></span>
+                            </div>
+
                         </div>
 
                         <button type="submit" class="btn btn-accent btn-lg w-100 mb-3">

@@ -4,6 +4,7 @@ using NorCommerce.Business.Services;
 using NorCommerce.Business.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using NorCommerce.Models;
+using NorCommerce.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,20 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
+
+// Seeding roles
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    foreach (var role in new[] { StaticDetails.RoleAdmin, StaticDetails.RoleCustomer, StaticDetails.RoleEmployee })
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

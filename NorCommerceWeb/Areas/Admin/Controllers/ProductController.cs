@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 using NorCommerce.Business.Services.IServices;
 using NorCommerce.DataAccess.Data;
 using NorCommerce.Models;
 using NorCommerce.Models.ViewModels;
+using NorCommerce.Utility;
 
 namespace NorCommerceWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.RoleAdmin)]
     public class ProductController : Controller
     {
         private readonly IProductService _service;

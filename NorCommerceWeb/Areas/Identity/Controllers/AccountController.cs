@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NorCommerce.Models.ViewModels;
 using NorCommerce.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using NorCommerce.Utility;
 
 namespace NorCommerceWeb.Areas.Identity.Controllers
 {
@@ -18,8 +20,18 @@ namespace NorCommerceWeb.Areas.Identity.Controllers
 
         public async Task<IActionResult> Register(string? returnURL = null)
         {
+            var registerObj = new RegisterVM
+            {
+                RoleList = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = StaticDetails.RoleCustomer, Value = StaticDetails.RoleCustomer },
+                    new SelectListItem { Text = StaticDetails.RoleAdmin, Value = StaticDetails.RoleAdmin },
+                    new SelectListItem { Text = StaticDetails.RoleEmployee, Value = StaticDetails.RoleEmployee }
+                }
+            };
+
             ViewData["ReturnURL"] = returnURL;
-            return View();
+            return View(registerObj);
         }
 
         [HttpPost]
@@ -47,6 +59,19 @@ namespace NorCommerceWeb.Areas.Identity.Controllers
 
                 if (result.Succeeded)
                 {
+                    // Assign the role to user
+                    if (!string.IsNullOrEmpty(registerVM.Role))
+                    {
+                        await _userManager.AddToRoleAsync(user, registerVM.Role);
+                    } else
+                    {
+                        // Default role assignment if no role is selected, assign the user to the "Customer" role
+                        await _userManager.AddToRoleAsync(user, StaticDetails.RoleCustomer);
+                    }
+
+                    
+                    await _userManager.AddToRoleAsync(user, registerVM.Role);
+
                     // Sign in the user after successful registration
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     TempData["Success"] = "Registration successful!";
