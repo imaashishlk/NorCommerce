@@ -4,11 +4,13 @@ using NorCommerce.DataAccess.Data;
 using NorCommerce.Models;
 using NorCommerce.Business.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using NorCommerce.Utility;
 
 namespace NorCommerceWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = StaticDetails.RoleAdmin)]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _service;
