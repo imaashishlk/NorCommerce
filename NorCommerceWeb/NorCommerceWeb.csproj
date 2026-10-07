@@ -19,4 +19,8 @@
     <ProjectReference Include="..\NorCommerce.DataAccess\NorCommerce.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Customer\Views\Shared\" />
+  </ItemGroup>
+
 </Project>

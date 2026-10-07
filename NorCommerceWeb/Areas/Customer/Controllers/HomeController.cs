@@ -1,5 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NorCommerce.Business.Services.IServices;
+using NorCommerce.Models;
+using NorCommerce.Models.ViewModels;
+using System.Security.Claims;
 
 namespace NorCommerceWeb.Areas.Customer.Controllers
 {
@@ -7,10 +12,12 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly IProductService _productService;
+        private readonly IShoppingCartService _shoppingCartService;
 
-        public HomeController(IProductService productService)
+        public HomeController(IProductService productService, IShoppingCartService shoppingCartService)
         {
             _productService = productService;
+            _shoppingCartService = shoppingCartService;
         }
 
         public async Task<IActionResult> Index()
@@ -19,6 +26,7 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
             return View(products);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(int productId)
         {
             var product = await _productService.GetProductByIdAsync(productId, includeCategories: true);
@@ -26,7 +34,35 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
             {
                 return NotFound();
             }
-            return View(product);
+
+            // Initializing a shopping cart
+            var shoppingCart = new ShoppingCart
+            {
+                Product = product,
+                ProductID = product.Id,
+                Count = 1 // Default count to 1
+            };
+
+            return View(shoppingCart);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [ActionName("Details")]
+        public async Task<IActionResult> AddToCart(ShoppingCart shoppingCart)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+            // Updating shopping cart with user ID
+            shoppingCart.ApplicationUserId = userId;
+
+            var cart = await _shoppingCartService.AddToCartAsync(shoppingCart);
+
+            TempData["success"] = "Added to cart.";
+            return RedirectToAction(nameof(Details), new { productId = shoppingCart.ProductID });
         }
 
         public IActionResult Privacy()
