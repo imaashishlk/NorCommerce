@@ -96,7 +96,7 @@ namespace NorCommerceWeb.Areas.Identity.Controllers
             return View(registerVM);
         }
 
-        public async Task<IActionResult> Login(string? returnURL = null)
+        public IActionResult Login(string? returnURL = null)
         {
             ViewData["ReturnURL"] = returnURL;
             return View();
@@ -107,6 +107,7 @@ namespace NorCommerceWeb.Areas.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginPOST(LoginVM loginVM, string? returnURL = null)
         {
+            ViewData["ReturnURL"] = returnURL;
 
             if (ModelState.IsValid)
             {

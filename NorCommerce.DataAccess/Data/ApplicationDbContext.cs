@@ -13,6 +13,9 @@ namespace NorCommerce.DataAccess.Data
 
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
+        public DbSet<OrderHeader> OrderHeaders { get; set; } = null!;
+        public DbSet<OrderDetails> OrderDetails { get; set; } = null!;
 
         // Data seeding for Categories
         protected override void OnModelCreating(ModelBuilder modelBuilder)

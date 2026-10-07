@@ -1,0 +1,167 @@
+﻿@using NorCommerce.Models.ViewModels
+@model CartVM
+
+
+<div class="container py-4" style="max-width: 1140px;">
+    <form method="post" asp-area="Customer" asp-controller="Cart" asp-action="OrderPlaced">
+        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+        <a asp-action="Index" asp-controller="Home" asp-area="Customer" class="text-decoration-none text-secondary small fw-medium d-inline-flex align-items-center gap-1 mb-3">
+            <i class="bi bi-arrow-left"></i> Continue Shopping
+        </a>
+
+        <div class="row g-4 align-items-start">
+
+            <!-- ============ LEFT: Items ============ -->
+            <div class="col-lg-7">
+                <div class="card border shadow-sm overflow-hidden">
+                    <div class="card-header text-white d-flex align-items-center justify-content-between py-3 px-4" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-bag me-2"></i>Your Items</h5>
+                        <span class="badge rounded-pill bg-white bg-opacity-25 text-white">@Model.CartItems.Count()</span>
+                    </div>
+
+
+                    <div class="cart-items-scroll">
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <div class="d-flex gap-3 px-4 py-3 border-bottom cart-item">
+                                @if (!string.IsNullOrEmpty(item.Product.ImageUrl))
+                                {
+                                    <a href="#" class="flex-shrink-0">
+                                        <div class="rounded overflow-hidden" style="width: 56px; height: 72px;">
+                                            <img src="@item.Product.ImageUrl" class="w-100 h-100" style="object-fit: cover;" alt="@item.Product.Title" />
+                                        </div>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="flex-shrink-0">
+                                        <div class="rounded overflow-hidden d-flex align-items-center justify-content-center bg-light" style="width: 56px; height: 72px;">
+                                            <i class="bi bi-book" style="font-size: 1.5rem; color: #8FA3C0;"></i>
+                                        </div>
+                                    </a>
+                                }
+
+                                <!-- Info -->
+                                <div class="flex-grow-1" style="min-width: 0;">
+                                    <a href="#" class="fw-semibold text-decoration-none d-block text-truncate" style="font-size: 0.85rem; color: #13294B;">
+                                        @item.Product.Title
+                                    </a>
+                                    <p class="text-secondary mb-2" style="font-size: 0.7rem;">by @item.Product.Author &middot; @item.Price.ToString("c") each</p>
+
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="input-group" style="width: 130px;">
+                                            <a href="#" class="btn btn-outline-secondary btn-sm px-2"><i class="bi bi-dash"></i></a>
+                                            <input type="number" value="@item.Count" min="1"
+                                                   class="form-control form-control-sm text-center fw-bold"
+                                                   style="min-width: 52px;"
+                                                   onchange="updateCart(1, this.value)" />
+                                            <a href="#" class="btn btn-outline-dark btn-sm px-2"><i class="bi bi-plus-lg"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Price + Remove -->
+                                <div class="text-end flex-shrink-0 d-flex flex-column justify-content-between align-self-stretch">
+                                    <span class="fw-bold" style="font-size: 0.9rem;">@((item.Count * item.Price).ToString("c"))</span>
+                                    <button type="submit"
+                                            asp-controller="Cart" asp-action="RemoveFromCart" asp-route-productId="@item.ProductID"
+                                            class="btn btn-link p-0 border-0 shadow-none text-danger text-decoration-none d-inline-flex align-items-center gap-1"
+                                            style="font-size: 0.7rem;">
+                                        <i class="bi bi-trash3"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ RIGHT: Checkout sidebar ============ -->
+            <div class="col-lg-5">
+                <div class="position-lg-sticky" style="top: 80px;">
+                    <div class="card border shadow-sm overflow-hidden">
+
+                        <!-- Shipping -->
+                        <div class="px-4 pt-4 pb-3">
+                            <h6 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-geo-alt" style="color: #1F4E8C;"></i> Shipping Address
+                            </h6>
+                            <div class="row g-2 mb-2">
+                                <div class="col-6">
+                                    <input class="form-control form-control-sm" placeholder="Full Name" asp-for="@Model.OrderHeader.Name" />
+                                    <span asp-validation-for="OrderHeader.Name" class="text-danger small"></span>
+                                </div>
+                                <div class="col-6">
+                                    <input class="form-control form-control-sm" placeholder="Phone" asp-for="@Model.OrderHeader.PhoneNumber" />
+                                    <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <input class="form-control form-control-sm" placeholder="Street Address" asp-for="@Model.OrderHeader.StreetAddress" />
+                                <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger small"></span>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col-5">
+                                    <input class="form-control form-control-sm" placeholder="City" asp-for="@Model.OrderHeader.City" />
+                                    <span asp-validation-for="OrderHeader.City" class="text-danger small"></span>
+                                </div>
+                                <div class="col-3">
+                                    <input class="form-control form-control-sm" placeholder="County" asp-for="@Model.OrderHeader.State" />
+                                    <span asp-validation-for="OrderHeader.State" class="text-danger small"></span>
+                                </div>
+                                <div class="col-4">
+                                    <input class="form-control form-control-sm" placeholder="Zip Code" asp-for="@Model.OrderHeader.PostalCode" />
+                                    <span asp-validation-for="OrderHeader.PostalCode" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-0 mx-4" />
+
+                        <!-- Summary -->
+
+                        <div class="px-4 py-3">
+                            <h6 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-receipt" style="color: #1F4E8C;"></i> Order Summary
+                            </h6>
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <div class="d-flex justify-content-between mb-1" style="font-size: 0.8rem;">
+                                    <span class="text-secondary text-truncate me-2">@item.Product.Title &times; @item.Count</span>
+                                    <span class="fw-medium flex-shrink-0">@((item.Count * item.Price).ToString("c"))</span>
+                                </div>
+                            }
+                            <hr class="my-2" />
+                            <div class="d-flex justify-content-between" style="font-size: 0.8rem;">
+                                <span class="text-secondary">Shipping</span>
+                                <span class="fw-semibold" style="color: #1F4E8C;">Free</span>
+                            </div>
+                        </div>
+
+                        <!-- Total bar -->
+                        <div class="d-flex justify-content-between align-items-center px-4 py-3 text-white" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
+                            <span class="text-uppercase fw-semibold small">Total</span>
+                            <span class="fw-bold fs-5">@Model.CartTotal.ToString("c")</span>
+                        </div>
+
+                        <!-- Place Order -->
+                        <div class="p-4">
+                            <button type="submit" class="btn btn-accent w-100 fw-semibold py-2 d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-lock"></i> Place Order
+                            </button>
+                            <div class="d-flex justify-content-center gap-3 mt-3 text-secondary" style="font-size: 0.7rem;">
+                                <span><i class="bi bi-shield-check me-1"></i>Secure</span>
+                                <span><i class="bi bi-truck me-1"></i>Free Shipping</span>
+                                <span><i class="bi bi-arrow-counterclockwise me-1"></i>Returns</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
