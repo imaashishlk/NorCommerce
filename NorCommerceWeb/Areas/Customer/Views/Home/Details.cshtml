@@ -1,6 +1,10 @@
 ﻿@using NorCommerce.Models
 @model ShoppingCart
 
+@{
+    ViewData["Title"] = "Product";
+}
+
 <div class="container py-4">
     <form asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@Model.ProductID" method="POST">
         <input asp-for="ProductID" type="hidden" />

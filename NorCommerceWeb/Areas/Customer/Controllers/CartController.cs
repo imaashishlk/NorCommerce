@@ -81,7 +81,7 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
             orderHeader.ApplicationUserId = userId;
             orderHeader.OrderDate = DateTime.UtcNow;
             orderHeader.OrderTotal = (double) await _shoppingCartService.GetCartTotalAsync(userId);
-            orderHeader.OrderStatus = StaticDetails.StatusPending;
+            orderHeader.OrderStatus = StaticDetails.StatusApproved;
 
             // order create
 

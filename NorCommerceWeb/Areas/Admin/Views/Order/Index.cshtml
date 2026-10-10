@@ -1,0 +1,99 @@
+﻿@model List<NorCommerce.Models.OrderHeader>
+@using NorCommerce.Utility
+
+@{
+    ViewData["Title"] = "Orders";
+
+    var status = Context.Request.Query["status"].ToString();
+
+    var inactive = "btn btn-outline-secondary btn-sm";
+    var active = "btn btn-sm text-white bg-success";
+
+    var pending = inactive;
+    var inProcess = inactive;
+    var shipped = inactive;
+    var cancelled = inactive;
+    var approved = inactive;
+    var refunded = inactive;
+    var all = inactive;
+
+    switch (status)
+    {
+        case "Pending":
+            pending = active;
+            break;
+        case "Processing":
+            inProcess = active;
+            break;
+        case "Shipped":
+            shipped = active;
+            break;
+        case "Cancelled":
+            cancelled = active;
+            break;
+        case "Approved":
+            approved = active;
+            break;
+        case "Refunded":
+            refunded = active;
+            break;
+        default:
+            all = active;
+            break;
+    }
+
+    var container = "container-fluid py-4";
+
+    if (User.IsInRole(StaticDetails.RoleAdmin) || User.IsInRole(StaticDetails.RoleEmployee))
+    {
+        Layout = "_AdminLayout";
+        container = "container-fluid py-4";
+    } else
+    {
+        Layout = "_Layout";
+        container = "container py-4";
+    }
+
+}
+
+<div class="@container">
+    <div class="card border shadow-sm overflow-hidden">
+        <div class="card-header text-white py-3 px-4 d-flex align-items-center justify-content-between" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
+            <div>
+                <h5 class="mb-0 fw-bold"><i class="bi bi-grid me-2"></i>Orders</h5>
+                <p class="mb-0 small" style="color: #A9C1E3;">Manage your Orders</p>
+            </div>
+            <div>
+                <span class="text-uppercase fw-semibold me-1" style="font-size: 0.70rem; letter-spacing: 0.1em; color: #A9C1E3;">FILTER </span>
+                <a asp-route-status="All" class="@all">All</a>
+                <a asp-route-status="@StaticDetails.StatusPending" class="@pending">Pending</a>
+                <a asp-route-status="@StaticDetails.StatusInProcess" class="@inProcess">In Process</a>
+                <a asp-route-status="@StaticDetails.StatusShipped" class="@shipped">Shipped</a>
+                <a asp-route-status="@StaticDetails.StatusCancelled" class="@cancelled">Cancelled</a>
+                <a asp-route-status="@StaticDetails.StatusApproved" class="@approved">Approved</a>
+                <a asp-route-status="@StaticDetails.StatusRefunded" class="@refunded">Refunded</a>
+            </div>
+        </div>
+        <div class="table-responsive p-3">
+            <table class="table-styled" id="orderTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Phone Number</th>
+                        <th>Order Date</th>
+                        <th>OrderTotal</th>
+                        <th>Order Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/orderIndex.js" asp-append-version="true"></script>
+}
