@@ -62,7 +62,8 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
             var cart = await _shoppingCartService.AddToCartAsync(shoppingCart);
 
             TempData["success"] = "Added to cart.";
-            return RedirectToAction(nameof(Details), new { productId = shoppingCart.ProductID });
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

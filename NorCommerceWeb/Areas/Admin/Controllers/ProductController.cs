@@ -135,6 +135,7 @@ namespace NorCommerceWeb.Areas.Admin.Controllers
             return View(productVM);
         }
 
+
         // GET /product/getall
         public async Task<IActionResult> GetAllAsync()
         {

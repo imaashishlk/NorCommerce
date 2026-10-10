@@ -1,6 +1,10 @@
 ﻿@using NorCommerce.Models.ViewModels
 @model CartVM
 
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
 
 <div class="container py-4" style="max-width: 1140px;">
     <form method="post" asp-area="Customer" asp-controller="Cart" asp-action="OrderPlaced">
