@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NorCommerce.DataAccess.Data;
 using NorCommerce.Business.Services;
 using NorCommerce.Business.Services.IServices;
-using Microsoft.AspNetCore.Identity;
+using NorCommerce.DataAccess.Data;
 using NorCommerce.Models;
 using NorCommerce.Utility;
 
@@ -20,9 +21,17 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+// Validate security stamp on every request
+builder.Services.Configure<SecurityStampValidatorOptions>(o =>
+{
+    o.ValidationInterval = TimeSpan.Zero;
+});
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -31,18 +40,24 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
+// Securing entire application with AutoValidateAntiforgeryTokenAttribute
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
+
 var app = builder.Build();
 
 // Seeding roles
 using (var scope = app.Services.CreateScope())
 {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
     foreach (var role in new[] { StaticDetails.RoleAdmin, StaticDetails.RoleCustomer, StaticDetails.RoleEmployee })
     {
         if (!await roleManager.RoleExistsAsync(role))
         {
-            await roleManager.CreateAsync(new IdentityRole(role));
+            await roleManager.CreateAsync(new ApplicationRole(role));
         }
     }
 }

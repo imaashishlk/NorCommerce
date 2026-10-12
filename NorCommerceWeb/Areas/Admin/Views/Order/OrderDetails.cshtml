@@ -26,9 +26,7 @@
 <div class="@container">
     <form method="post">
         <input asp-for="@Model.Id" hidden />
-        @* TODO: Add hidden input for order ID *@
 
-        @* TODO: Add back to orders link *@
         <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="text-decoration-none text-secondary small fw-medium d-inline-flex align-items-center gap-1 mb-3">
             <i class="bi bi-arrow-left"></i> Back to orders
         </a>
@@ -52,7 +50,6 @@
                         <div class="row g-2 mb-2">
                             <label class="col-4 col-form-label small fw-medium text-secondary">Name</label>
                             <div class="col-8">
-                                @* TODO: Bind to Name property, make editable for admin, readonly for customer *@
                                 <input type="text" class="form-control form-control-sm" asp-for="Name" value="@Model.Name" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="Name"></span>
                             </div>
@@ -61,7 +58,6 @@
                         <div class="row g-2 mb-2">
                             <label class="col-4 col-form-label small fw-medium text-secondary">Phone</label>
                             <div class="col-8">
-                                @* TODO: Bind to Phone property *@
                                 <input type="text" class="form-control form-control-sm" asp-for="PhoneNumber" value="@Model.PhoneNumber" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="PhoneNumber"></span>
                             </div>
@@ -70,7 +66,6 @@
                         <div class="row g-2 mb-2">
                             <label class="col-4 col-form-label small fw-medium text-secondary">Address</label>
                             <div class="col-8">
-                                @* TODO: Bind to Address property *@
                                 <input type="text" class="form-control form-control-sm" asp-for="StreetAddress" value="@Model.StreetAddress" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="StreetAddress"></span>
                             </div>
@@ -79,7 +74,6 @@
                         <div class="row g-2 mb-2">
                             <label class="col-4 col-form-label small fw-medium text-secondary">City</label>
                             <div class="col-8">
-                                @* TODO: Bind to City property *@
                                 <input type="text" class="form-control form-control-sm" asp-for="City" value="@Model.City" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="City"></span>
                             </div>
@@ -88,7 +82,6 @@
                         <div class="row g-2 mb-2">
                             <label class="col-4 col-form-label small fw-medium text-secondary">State</label>
                             <div class="col-8">
-                                @* TODO: Bind to State property *@
                                 <input type="text" class="form-control form-control-sm" asp-for="State" value="@Model.State" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="State"></span>
                             </div>
@@ -97,7 +90,6 @@
                         <div class="row g-2 mb-2">
                             <label class="col-4 col-form-label small fw-medium text-secondary">Zip Code</label>
                             <div class="col-8">
-                                @* TODO: Bind to PostalCode property *@
                                 <input type="text" class="form-control form-control-sm" asp-for="PostalCode" value="@Model.PostalCode" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="PostalCode"></span>
                             </div>
@@ -106,7 +98,6 @@
                         <div class="row g-2 mb-2">
                             <label class="col-4 col-form-label small fw-medium text-secondary">Email</label>
                             <div class="col-8">
-                                @* TODO: Display user email (read-only) *@
                                 <input type="email" readonly class="form-control-plaintext form-control-sm" asp-for="ApplicationUser.Email" />
                             </div>
                         </div>
@@ -116,7 +107,6 @@
                             <div class="row g-2 mb-2">
                                 <label class="col-4 col-form-label small fw-medium text-secondary">Order Date</label>
                                 <div class="col-8">
-                                    @* TODO: Display order date (read-only) *@
                                     <input type="text" readonly class="form-control-plaintext form-control-sm" asp-for="OrderDate" value="@Model.OrderDate.ToString("MM/dd/yyyy")" />
                                 </div>
                             </div>
@@ -127,7 +117,6 @@
                             <div class="row g-2 mb-2">
                                 <label class="col-4 col-form-label small fw-medium text-secondary">Carrier</label>
                                 <div class="col-8">
-                                    @* TODO: Bind to Carrier property *@
                                     <input type="text" id="carrier" class="form-control form-control-sm" asp-for="Carrier" value="@Model.Carrier" readonly="@(readOnlyProp)" />
                                     <span class="text-danger small" asp-validation-for="Carrier"></span>
 
@@ -137,7 +126,6 @@
                             <div class="row g-2 mb-2">
                                 <label class="col-4 col-form-label small fw-medium text-secondary">Tracking</label>
                                 <div class="col-8">
-                                    @* TODO: Bind to TrackingNumber property *@
                                     <input type="text" id="trackingNumber" class="form-control form-control-sm" asp-for="TrackingNumber" value="@Model.TrackingNumber" readonly="@(readOnlyProp)" />
                                     <span class="text-danger small" asp-validation-for="TrackingNumber"></span>
                                 </div>
@@ -149,7 +137,6 @@
                             <div class="row g-2 mb-2">
                                 <label class="col-4 col-form-label small fw-medium text-secondary">Shipping Date</label>
                                 <div class="col-8">
-                                    @* TODO: Display shipping date (read-only) *@
                                     <input type="text" readonly class="form-control-plaintext form-control-sm" asp-for="ShippingDate" value="@Model.ShippingDate.ToString("MM/dd/yyyy")" />
                                 </div>
                             </div>
@@ -181,27 +168,21 @@
 
                         <span class="badge bg-dark mb-3">
                             <i class="bi bi-info-circle me-1"></i> <span>@Model.OrderStatus</span>
-                            @* TODO: Display order status *@
                         </span>
 
                         <div class="border rounded overflow-hidden mb-4">
-                            @* TODO: Loop through order items *@
 
-                            <!-- Sample order item -->
                             @foreach (var item in Model.OrderDetails)
                             {
                                 <div class="d-flex justify-content-between align-items-start p-3 border-bottom">
                                     <div>
                                         <p class="fw-medium small mb-0">@item.Product.Title</p>
-                                        @* TODO: Display product title *@
                                         <p class="text-secondary mb-0" style="font-size: 0.75rem;">
                                             @item.Price.ToString("c") x @item.Count
-                                            @* TODO: Display price and quantity *@
                                         </p>
                                     </div>
                                     <p class="fw-semibold small mb-0" style="color: #13294B;">
                                         @((item.Count * item.Price).ToString("c"))
-                                        @* TODO: Display line total *@
                                     </p>
                                 </div>
                             }
@@ -209,7 +190,6 @@
                             <div class="d-flex justify-content-between align-items-center p-3 text-white" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
                                 <span class="fw-bold small text-uppercase">Total</span>
                                 <span class="fw-bold fs-5">$199.98</span>
-                                @* TODO: Display order total *@
                             </div>
                         </div>
 
