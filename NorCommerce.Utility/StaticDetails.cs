@@ -10,6 +10,8 @@ namespace NorCommerce.Utility
         public const string RoleAdmin = "Admin";
         public const string RoleEmployee = "Employee";
 
+        public const string SessionCart = "SessionShoppingCart";
+
 
         public const string StatusPending = "Pending";
         public const string StatusApproved = "Approved";
@@ -17,7 +19,5 @@ namespace NorCommerce.Utility
         public const string StatusShipped = "Shipped";
         public const string StatusCancelled = "Cancelled";
         public const string StatusRefunded = "Refunded";
-
-
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NorCommerce.Business.Services;
@@ -6,6 +7,7 @@ using NorCommerce.Business.Services.IServices;
 using NorCommerce.DataAccess.Data;
 using NorCommerce.Models;
 using NorCommerce.Utility;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,18 @@ builder.Services.Configure<SecurityStampValidatorOptions>(o =>
 {
     o.ValidationInterval = TimeSpan.Zero;
 });
+
+// Session config
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(o =>
+{
+    o.IdleTimeout = TimeSpan.FromMinutes(100);
+    o.Cookie.HttpOnly = true;
+    o.Cookie.IsEssential = true;
+});
+
+// Email config
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -75,6 +89,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 
 app.MapStaticAssets();
 

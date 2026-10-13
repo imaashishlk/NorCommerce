@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.18.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NorCommerce.DataAccess\NorCommerce.DataAccess.csproj" />
     <ProjectReference Include="..\NorCommerce.Models\NorCommerce.Models.csproj" />
     <ProjectReference Include="..\NorCommerce.Utility\NorCommerce.Utility.csproj" />

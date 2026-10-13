@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NorCommerce.Business.Services.IServices;
+using NorCommerce.Utility;
 using System.Security.Claims;
 
 namespace NorCommerceWeb.Areas.Customer.ViewComponents
@@ -17,11 +18,21 @@ namespace NorCommerceWeb.Areas.Customer.ViewComponents
         {
             var userId = UserClaimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var count = string.IsNullOrEmpty(userId)
-                ? 0
-                : await _cartService.GetCountAsync(userId);
+            if (string.IsNullOrEmpty(userId))
+            {
+                HttpContext.Session.Remove(StaticDetails.SessionCart);
+                return Content("0");
+            }
 
-            return Content(count.ToString());
+            var count = HttpContext.Session.GetInt32(StaticDetails.SessionCart);
+
+            if (count == null)
+            {
+                count = await _cartService.GetCountAsync(userId);
+                HttpContext.Session.SetInt32(StaticDetails.SessionCart, count.Value);
+            }
+
+            return Content(count.Value.ToString());
         }
     }
 }
