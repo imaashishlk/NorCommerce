@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NorCommerce.Business.Services.IServices;
 using NorCommerce.Models;
 using NorCommerce.Models.ViewModels;
+using NorCommerce.Utility;
 using System.Security.Claims;
 
 namespace NorCommerceWeb.Areas.Customer.Controllers
@@ -60,6 +61,10 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
             shoppingCart.ApplicationUserId = userId;
 
             var cart = await _shoppingCartService.AddToCartAsync(shoppingCart);
+
+            // Get count and update session
+            var count = await _shoppingCartService.GetCountAsync(userId);
+            HttpContext.Session.SetInt32(StaticDetails.SessionCart, count);
 
             TempData["success"] = "Added to cart.";
 

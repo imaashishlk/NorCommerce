@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using NorCommerce.Business.Emails;
 using NorCommerce.Business.Services.IServices;
 using NorCommerce.Models;
 using NorCommerce.Models.ViewModels;
@@ -14,14 +16,17 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IOrderService _orderService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEmailSender _emailSender;
+        private readonly ILogger<CartController> _logger;
 
 
-        public CartController(IShoppingCartService shoppingCartService, IOrderService orderService, UserManager<ApplicationUser> userManager)
+        public CartController(IShoppingCartService shoppingCartService, IOrderService orderService, UserManager<ApplicationUser> userManager, IEmailSender emailSender, ILogger<CartController> logger)
         {
             _shoppingCartService = shoppingCartService;
             _orderService = orderService;
             _userManager = userManager;
-
+            _emailSender = emailSender;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -95,6 +100,26 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
             {
                 // Clear the shopping cart
                 await _shoppingCartService.ClearCartAsync(userId);
+
+                // Get count and update session
+                var count = await _shoppingCartService.GetCountAsync(userId);
+                HttpContext.Session.SetInt32(StaticDetails.SessionCart, count);
+
+                var html = EmailTemplates.OrderConfirmation(created_order, created_order.OrderDetails);
+
+                // Sending email
+                try
+                {
+                    await _emailSender.SendEmailAsync(
+                        created_order.ApplicationUser.Email!,
+                        $"Order #{created_order.Id} confirmed",
+                        html);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Order email failed for order {OrderId}", created_order.Id);
+                }
+
                 TempData["success"] = "Order placed successfully.";
             }
 
@@ -122,6 +147,10 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
             await _shoppingCartService.RemoveFromCartAsync(productId, userId);
+
+            // Get count and update session
+            var count = await _shoppingCartService.GetCountAsync(userId);
+            HttpContext.Session.SetInt32(StaticDetails.SessionCart, count);
 
             TempData["success"] = "Removed from cart.";
 
