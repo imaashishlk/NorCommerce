@@ -78,6 +78,39 @@ namespace NorCommerce.Business.Emails
             return Layout("Order confirmed", body);
         }
 
+        public static string OrderCancelledRefunded(OrderHeader order, IEnumerable<OrderDetails> items)
+        {
+            var rows = new StringBuilder();
+
+            foreach (var item in items)
+            {
+                rows.Append($@"
+                    <tr>
+                      <td style=""padding:8px 0;border-bottom:1px solid {Border};"">{WebUtility.HtmlEncode(item.Product.Title)} x {item.Count}</td>
+                      <td style=""padding:8px 0;border-bottom:1px solid {Border};text-align:right;"">{(item.Price * item.Count):C}</td>
+                    </tr>");
+            }
+
+            var body = $@"
+                <p>Hi {WebUtility.HtmlEncode(order.Name)},</p>
+                <p>Your order has been cancelled and a refund has been initiated. Thank you for shopping with us.</p>
+
+                <p style=""margin:16px 0 8px;""><strong>Order #{order.Id}</strong><br/>
+                <span style=""color:{Muted};"">{order.OrderDate:dd.MM.yyyy HH:mm}</span></p>
+
+                <table width=""100%"" style=""border-collapse:collapse;font-size:14px;"">
+                  {rows}
+                  <tr>
+                    <td style=""padding:12px 0;font-weight:bold;"">Total</td>
+                    <td style=""padding:12px 0;font-weight:bold;text-align:right;color:{Red};"">{order.OrderTotal:C}</td>
+                  </tr>
+                </table>
+
+                <p style=""margin-top:16px;"">We will send you another email when your order ships.</p>";
+
+            return Layout("Order confirmed", body);
+        }
+
         public static string OrderShipped(OrderHeader order)
         {
             var body = $@"

@@ -6,11 +6,19 @@
             dataSrc: '' // the API returns a plain array
         },
         columns: [
-            { data: 'title', width: "25%" },
-            { data: 'isbn', width: "15%" },
+            { data: 'title', width: "25%", render: function (data) { return '<span class="fw-semibold">' + data + '</span>'; } },
+            { data: 'isbn', width: "15%", render: function (data) { return '<span class="small text-secondary font-monospace">' + data + '</span>'; } },
             { data: 'author', width: "15%" },
-            { data: 'price', render: function (data) { return '$' + data.toFixed(2); }, width: "10%" },
-            { data: 'category.name', width: "15%" }, // Matcher den relaterede kategori f.eks. { category: { name: "Elektronik" } }
+            {
+                data: 'price', width: "10%", className: 'text-end',
+                render: function (data) { return '<span class="fw-semibold">' + data.toLocaleString('nb-NO', { style: 'currency', currency: 'NOK' }) + '</span>'; }
+            },
+            {
+                data: 'category.name', width: "15%",
+                render: function (data) {
+                    return '<span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:50px;background:#EEF2FF;color:#13294B;">' + data + '</span>';
+                }
+            }, // Matcher den kategori f.eks. { category: { name: "Elektronik" } }
             {
                 data: 'id',
                 width: "20%",
@@ -25,7 +33,6 @@
                             <button type="button" onclick="deleteProduct(${data})" class="btn btn-sm btn-outline-danger">
                              <i class="bi bi-trash me-1"></i> Delete
                             </button>
-
                             `;
                 }
             },

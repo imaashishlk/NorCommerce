@@ -8,6 +8,9 @@ using NorCommerce.DataAccess.Data;
 using NorCommerce.Models;
 using NorCommerce.Utility;
 using Stripe;
+using ProductService = NorCommerce.Business.Services.ProductService;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,11 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+// Stripe: Scoped
+builder.Services.AddScoped<Stripe.Checkout.SessionService>();
+builder.Services.AddScoped<Stripe.RefundService>();
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -83,6 +91,22 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// Stripe Config APIKEY
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+
+// Setting app culture
+var culture = new CultureInfo("nb-NO");
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(culture),
+    SupportedCultures = new[] { culture },
+    SupportedUICultures = new[] { culture }
+});
+
+CultureInfo.DefaultThreadCurrentCulture = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 app.UseHttpsRedirection();
 app.UseRouting();

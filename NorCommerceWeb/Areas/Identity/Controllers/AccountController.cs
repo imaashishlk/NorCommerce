@@ -128,6 +128,11 @@ namespace NorCommerceWeb.Areas.Identity.Controllers
                         return Redirect(returnURL);
                     }
 
+                    if (User.IsInRole(StaticDetails.RoleAdmin) || User.IsInRole(StaticDetails.RoleEmployee))
+                    {
+                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    }
+
                     return RedirectToAction("Index", "Home", new { area = "Customer" });
                 }
                 
