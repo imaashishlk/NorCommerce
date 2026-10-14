@@ -27,6 +27,7 @@ namespace NorCommerce.Models
         public string? Carrier { get; set; }
         public string? SessionID { get; set; }
         public string? PaymentIntentID { get; set; }
+        public string? PaymentStatus { get; set; }
 
         [Required]
         [Display(Name = "Phone Number")]

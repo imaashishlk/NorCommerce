@@ -8,6 +8,7 @@ using NorCommerce.Models;
 using Microsoft.EntityFrameworkCore;
 using NorCommerce.Models.ViewModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Stripe.Checkout;
 
 namespace NorCommerce.Business.Services
 {

@@ -2,10 +2,7 @@
 
 $(document).ready(function () {
     token = $('input[name="__RequestVerificationToken"]').val();
-    loadDataTable();
-});
 
-$(document).ready(function () {
     const url = '/admin/user/getalluser'
 
     $('#tblData').DataTable({
@@ -14,9 +11,14 @@ $(document).ready(function () {
             dataSrc: 'data'
         },
         columns: [
-            { data: 'name', width: "15%" },
-            { data: 'email', width: "15%" },
-            { data: 'phoneNumber', width: "15%" },
+            {
+                data: 'name', width: "15%", render: function (data) {
+                    return '<div class="d-flex align-items-center gap-2">' +
+                        '<span style="width:32px;height:32px;border-radius:50%;background:#13294B;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;">' + data.charAt(0).toUpperCase() + '</span>' +
+                        '<span class="fw-semibold">' + data + '</span></div>';
+                } },
+            { data: 'email', width: "20%", render: function (data) { return '<span class="text-secondary">' + data + '</span>'; } },
+            { data: 'phoneNumber', width: "15%", render: function (data) { return '<span class="text-secondary">' + (data ?? '-') + '</span>'; } },
             {
                 data: 'role',
                 width: "15%",

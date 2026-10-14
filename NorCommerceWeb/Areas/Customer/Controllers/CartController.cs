@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using NorCommerce.Business.Emails;
+using NorCommerce.Business.Services;
 using NorCommerce.Business.Services.IServices;
 using NorCommerce.Models;
 using NorCommerce.Models.ViewModels;
@@ -18,15 +19,16 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<CartController> _logger;
+        private readonly IPaymentService _paymentService;
 
-
-        public CartController(IShoppingCartService shoppingCartService, IOrderService orderService, UserManager<ApplicationUser> userManager, IEmailSender emailSender, ILogger<CartController> logger)
+        public CartController(IShoppingCartService shoppingCartService, IOrderService orderService, UserManager<ApplicationUser> userManager, IEmailSender emailSender, ILogger<CartController> logger, IPaymentService paymentService)
         {
             _shoppingCartService = shoppingCartService;
             _orderService = orderService;
             _userManager = userManager;
             _emailSender = emailSender;
             _logger = logger;
+            _paymentService = paymentService;
         }
 
         public async Task<IActionResult> Index()
@@ -86,7 +88,9 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
             orderHeader.ApplicationUserId = userId;
             orderHeader.OrderDate = DateTime.UtcNow;
             orderHeader.OrderTotal = (double) await _shoppingCartService.GetCartTotalAsync(userId);
-            orderHeader.OrderStatus = StaticDetails.StatusApproved;
+            // We check for payment, so Pending for now.
+            orderHeader.OrderStatus = StaticDetails.StatusPending;
+            orderHeader.PaymentStatus = StaticDetails.PaymentStatusPending;
 
             // order create
 
@@ -96,8 +100,47 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
             {
                 TempData["error"] = "Error creating order.";
                 return RedirectToAction("Index");
-            } else
+            }
+
+            // Now we go with Stripe
+            var order = await _orderService.GetOrderByIdAsync(created_order.Id);
+
+            var domain = $"{Request.Scheme}://{Request.Host}/";
+            var payment = await _paymentService.CreateCheckoutSessionAsync(
+                order!,
+                domain + $"Customer/Cart/OrderConfirmed?id={order!.Id}",
+                domain + "Customer/Cart/Index");
+
+            order.SessionID = payment.SessionId;
+            await _orderService.UpdateOrdersAsync(order);
+
+            return Redirect(payment.Url);
+        }
+
+        public async Task<IActionResult> OrderConfirmed(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var order = await _orderService.GetOrderByIdAsync(id, includeDetails: true, includeUser: true);
+
+            // Limiting to user and if the order belongs to the user
+            if (order == null || order.ApplicationUserId != userId)
+                return NotFound();
+
+            if (order.PaymentStatus != StaticDetails.PaymentStatusApproved && order.SessionID != null)
             {
+                var (isPaid, paymentIntentId) = await _paymentService.GetPaymentStatusAsync(order.SessionID);
+
+                if (!isPaid)
+                {
+                    TempData["error"] = "Payment was not completed.";
+                    return RedirectToAction("Index");
+                }
+
+                order.PaymentIntentID = paymentIntentId;
+                order.OrderStatus = StaticDetails.StatusApproved;
+                order.PaymentStatus = StaticDetails.PaymentStatusApproved;
+                await _orderService.UpdateOrdersAsync(order);
+
                 // Clear the shopping cart
                 await _shoppingCartService.ClearCartAsync(userId);
 
@@ -105,37 +148,26 @@ namespace NorCommerceWeb.Areas.Customer.Controllers
                 var count = await _shoppingCartService.GetCountAsync(userId);
                 HttpContext.Session.SetInt32(StaticDetails.SessionCart, count);
 
-                var html = EmailTemplates.OrderConfirmation(created_order, created_order.OrderDetails);
+                var html = EmailTemplates.OrderConfirmation(order, order.OrderDetails);
 
                 // Sending email
                 try
                 {
                     await _emailSender.SendEmailAsync(
-                        created_order.ApplicationUser.Email!,
-                        $"Order #{created_order.Id} confirmed",
+                        order.ApplicationUser.Email!,
+                        $"Order #{order.Id} confirmed",
                         html);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Order email failed for order {OrderId}", created_order.Id);
+                    _logger.LogError(ex, "Order email failed for order {OrderId}", order.Id);
                 }
 
                 TempData["success"] = "Order placed successfully.";
+
             }
 
-            return RedirectToAction("OrderConfirmed", new { id = created_order.Id });
-        }
-
-        public async Task<IActionResult> OrderConfirmed(int id)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var order = await _orderService.GetOrderByIdAsync(id);
-
-            // Limiting to user and if the order belongs to the user
-            if (order == null || order.ApplicationUserId != userId)
-                return NotFound();
-
-            return View(id);
+            return View(order.Id);
         }
 
         [HttpPost]
