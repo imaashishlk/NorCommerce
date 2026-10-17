@@ -2,7 +2,7 @@
 @model RegisterVM
 
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = L["Register"].Value;
 }
 
 
@@ -12,8 +12,8 @@
             <div class="card shadow-sm border overflow-hidden">
                 <div class="card-header text-white py-3 px-4 text-center" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
                     <i class="bi bi-person-plus-fill display-4"></i>
-                    <h4 class="fw-bold mt-2 mb-1">Create Account</h4>
-                    <p class="mb-0 small" style="color: #A9C1E3;">Join us today</p>
+                    <h4 class="fw-bold mt-2 mb-1">@L["CreateAccount"]</h4>
+                    <p class="mb-0 small" style="color: #A9C1E3;">@L["JoinUsToday"]</p>
                 </div>
 
                 <div class="card-body p-5">
@@ -81,7 +81,7 @@
                             <div class="col-md-12 mb-3">
                                 <label asp-for="Role"></label>
                                 <select asp-for="Role" asp-items="Model.RoleList" class="form-select">
-                                    <option disabled selected>-- Select Role --</option>
+                                    <option disabled selected>@L["SelectRole"]</option>
                                 </select>
                                 <span asp-validation-for="Role" class="text-danger"></span>
                             </div>
@@ -89,7 +89,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-accent btn-lg w-100 mb-3">
-                            <i class="bi bi-person-check me-2"></i>Register
+                            <i class="bi bi-person-check me-2"></i>@L["Register"]
                         </button>
                     </form>
 
@@ -97,7 +97,7 @@
 
                     <div class="text-center">
                         <!-- TODO: Add Link -->
-                        <p class="mb-0">Already have an account? <a href="#" class="fw-semibold text-decoration-none" style="color: #C8102E;">Log in</a></p>
+                        <p class="mb-0">@L["AlreadyHaveAccount"] <a href="#" class="fw-semibold text-decoration-none" style="color: #C8102E;">@L["LogInLink"]</a></p>
                     </div>
                 </div>
             </div>

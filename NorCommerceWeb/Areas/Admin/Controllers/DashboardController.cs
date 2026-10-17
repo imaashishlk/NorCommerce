@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NorCommerce.Business.Services.IServices;
 using NorCommerce.Utility;
 
 namespace NorCommerceWeb.Areas.Admin.Controllers
@@ -8,9 +9,14 @@ namespace NorCommerceWeb.Areas.Admin.Controllers
     [Authorize(Roles = StaticDetails.RoleAdmin)]
     public class DashboardController : Controller
     {
-        public IActionResult Index()
+        private readonly IDashboardService _dashboardService;
+        public DashboardController(IDashboardService dashboardService)
         {
-            return View();
+            _dashboardService = dashboardService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            return View(await _dashboardService.GetDashboardAsync());
         }
     }
 }

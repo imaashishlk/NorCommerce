@@ -1060,3 +1060,76 @@ table.dataTable tbody td:not(.dt-empty) {
 #productTable td:last-child {
     white-space: nowrap;
 }
+
+.dash-card {
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+    background: #fff;
+}
+
+.dash-link {
+    text-decoration: none;
+    color: inherit;
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+}
+
+    .dash-link:hover {
+        transform: translateY(-2px);
+        border-color: #13294B;
+        box-shadow: 0 8px 20px rgba(19, 41, 75, .08);
+    }
+
+.dash-label {
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #6B7280;
+}
+
+.dash-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.dash-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #13294B;
+    line-height: 1.1;
+}
+
+.dash-sub {
+    font-size: .78rem;
+    color: #6B7280;
+}
+
+.dash-card-header {
+    background: transparent;
+    border-bottom: 1px solid #F1F2F4;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: .9rem;
+    color: #111827;
+}
+
+.dash-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .72rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 50px;
+    background: #F4F6F9;
+    color: #4B5563;
+}

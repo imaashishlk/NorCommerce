@@ -28,15 +28,15 @@
         <input asp-for="@Model.Id" hidden />
 
         <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="text-decoration-none text-secondary small fw-medium d-inline-flex align-items-center gap-1 mb-3">
-            <i class="bi bi-arrow-left"></i> Back to orders
+            <i class="bi bi-arrow-left"></i> @L["BackToOrders"]
         </a>
 
         <div class="card border shadow-sm overflow-hidden">
             <div class="card-header text-white py-3 px-4" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
                 <h5 class="mb-0 fw-bold">
-                    <i class="bi bi-receipt me-2"></i>Order #<span>@Model.Id</span>
+                    <i class="bi bi-receipt me-2"></i>@L["Order"] #<span>@Model.Id</span>
                 </h5>
-                <p class="mb-0 small" style="color: #A9C1E3;">Placed on <span>@Model.OrderDate.ToString("MM/dd/yyyy")</span></p>
+                <p class="mb-0 small" style="color: #A9C1E3;">@L["PlacedOn"] <span>@Model.OrderDate.ToString("MM/dd/yyyy")</span></p>
             </div>
 
             <div class="card-body p-4">
@@ -44,11 +44,11 @@
                     <!-- Left column: Shipping info -->
                     <div class="col-lg-6">
                         <h6 class="text-uppercase fw-semibold text-secondary mb-4" style="font-size: 0.7rem; letter-spacing: 0.1em;">
-                            Shipping &amp; Tracking
+                            @L["ShippingAndTracking"]
                         </h6>
 
                         <div class="row g-2 mb-2">
-                            <label class="col-4 col-form-label small fw-medium text-secondary">Name</label>
+                            <label class="col-4 col-form-label small fw-medium text-secondary">@L["Name"]</label>
                             <div class="col-8">
                                 <input type="text" class="form-control form-control-sm" asp-for="Name" value="@Model.Name" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="Name"></span>
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="row g-2 mb-2">
-                            <label class="col-4 col-form-label small fw-medium text-secondary">Phone</label>
+                            <label class="col-4 col-form-label small fw-medium text-secondary">@L["Phone"]</label>
                             <div class="col-8">
                                 <input type="text" class="form-control form-control-sm" asp-for="PhoneNumber" value="@Model.PhoneNumber" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="PhoneNumber"></span>
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="row g-2 mb-2">
-                            <label class="col-4 col-form-label small fw-medium text-secondary">Address</label>
+                            <label class="col-4 col-form-label small fw-medium text-secondary">@L["Address"]</label>
                             <div class="col-8">
                                 <input type="text" class="form-control form-control-sm" asp-for="StreetAddress" value="@Model.StreetAddress" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="StreetAddress"></span>
@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="row g-2 mb-2">
-                            <label class="col-4 col-form-label small fw-medium text-secondary">City</label>
+                            <label class="col-4 col-form-label small fw-medium text-secondary">@L["City"]</label>
                             <div class="col-8">
                                 <input type="text" class="form-control form-control-sm" asp-for="City" value="@Model.City" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="City"></span>
@@ -80,7 +80,7 @@
                         </div>
 
                         <div class="row g-2 mb-2">
-                            <label class="col-4 col-form-label small fw-medium text-secondary">State</label>
+                            <label class="col-4 col-form-label small fw-medium text-secondary">@L["State"]</label>
                             <div class="col-8">
                                 <input type="text" class="form-control form-control-sm" asp-for="State" value="@Model.State" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="State"></span>
@@ -88,7 +88,7 @@
                         </div>
 
                         <div class="row g-2 mb-2">
-                            <label class="col-4 col-form-label small fw-medium text-secondary">Zip Code</label>
+                            <label class="col-4 col-form-label small fw-medium text-secondary">@L["PostalCode"]</label>
                             <div class="col-8">
                                 <input type="text" class="form-control form-control-sm" asp-for="PostalCode" value="@Model.PostalCode" readonly="@(readOnlyProp)" />
                                 <span class="text-danger small" asp-validation-for="PostalCode"></span>
@@ -96,7 +96,7 @@
                         </div>
 
                         <div class="row g-2 mb-2">
-                            <label class="col-4 col-form-label small fw-medium text-secondary">Email</label>
+                            <label class="col-4 col-form-label small fw-medium text-secondary">@L["Email"]</label>
                             <div class="col-8">
                                 <input type="email" readonly class="form-control-plaintext form-control-sm" asp-for="ApplicationUser.Email" />
                             </div>
@@ -105,7 +105,7 @@
                         @if (Model.OrderDate != default)
                         {
                             <div class="row g-2 mb-2">
-                                <label class="col-4 col-form-label small fw-medium text-secondary">Order Date</label>
+                                <label class="col-4 col-form-label small fw-medium text-secondary">@L["OrderDate"]</label>
                                 <div class="col-8">
                                     <input type="text" readonly class="form-control-plaintext form-control-sm" asp-for="OrderDate" value="@Model.OrderDate.ToString("MM/dd/yyyy")" />
                                 </div>
@@ -115,7 +115,7 @@
                         @if (Model.OrderStatus != StaticDetails.StatusPending && Model.OrderStatus != StaticDetails.StatusApproved && Model.OrderStatus != StaticDetails.StatusRefunded && Model.OrderStatus != StaticDetails.StatusCancelled)
                         {
                             <div class="row g-2 mb-2">
-                                <label class="col-4 col-form-label small fw-medium text-secondary">Carrier</label>
+                                <label class="col-4 col-form-label small fw-medium text-secondary">@L["Carrier"]</label>
                                 <div class="col-8">
                                     <input type="text" id="carrier" class="form-control form-control-sm" asp-for="Carrier" value="@Model.Carrier" readonly="@(readOnlyProp)" />
                                     <span class="text-danger small" asp-validation-for="Carrier"></span>
@@ -124,7 +124,7 @@
                             </div>
 
                             <div class="row g-2 mb-2">
-                                <label class="col-4 col-form-label small fw-medium text-secondary">Tracking</label>
+                                <label class="col-4 col-form-label small fw-medium text-secondary">@L["Tracking"]</label>
                                 <div class="col-8">
                                     <input type="text" id="trackingNumber" class="form-control form-control-sm" asp-for="TrackingNumber" value="@Model.TrackingNumber" readonly="@(readOnlyProp)" />
                                     <span class="text-danger small" asp-validation-for="TrackingNumber"></span>
@@ -135,7 +135,7 @@
                         @if (Model.OrderStatus == StaticDetails.StatusShipped && Model.ShippingDate != default)
                         {
                             <div class="row g-2 mb-2">
-                                <label class="col-4 col-form-label small fw-medium text-secondary">Shipping Date</label>
+                                <label class="col-4 col-form-label small fw-medium text-secondary">@L["ShippingDate"]</label>
                                 <div class="col-8">
                                     <input type="text" readonly class="form-control-plaintext form-control-sm" asp-for="ShippingDate" value="@Model.ShippingDate.ToString("MM/dd/yyyy")" />
                                 </div>
@@ -147,13 +147,13 @@
                             @if (Model.OrderStatus == @StaticDetails.StatusShipped)
                             {
                                 <button type="submit" disabled asp-action="UpdateOrderDetails" asp-route-id="@Model.Id" class="btn btn-accent w-100 fw-semibold mt-3">
-                                    Update Order Details
+                                    @L["UpdateOrderDetails"]
                                 </button>
                             }
                             else
                             {
                                 <button type="submit" asp-action="UpdateOrderDetails" asp-route-id="@Model.Id" class="btn btn-accent w-100 fw-semibold mt-3">
-                                    Update Order Details
+                                    @L["UpdateOrderDetails"]
                                 </button>
                             }
                         }
@@ -163,7 +163,7 @@
                     <!-- Right column: Order summary -->
                     <div class="col-lg-6">
                         <h6 class="text-uppercase fw-semibold text-secondary mb-4" style="font-size: 0.7rem; letter-spacing: 0.1em;">
-                            Order Summary
+                            @L["OrderSummary"]
                         </h6>
 
                         <span class="badge bg-dark mb-3">
@@ -188,7 +188,7 @@
                             }
 
                             <div class="d-flex justify-content-between align-items-center p-3 text-white" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
-                                <span class="fw-bold small text-uppercase">Total</span>
+                                <span class="fw-bold small text-uppercase">@L["Total"]</span>
                                 <span class="fw-bold fs-5">@Model.OrderTotal.ToString("C")</span>
                             </div>
                         </div>
@@ -200,7 +200,7 @@
                                 {
                                     <button type="submit" asp-action="UpdateStatus" asp-route-id="@Model.Id" asp-route-status="@StaticDetails.StatusInProcess"
                                             class="btn fw-semibold text-white d-inline-flex align-items-center gap-2" style="background: #13294B;">
-                                        <i class="bi bi-gear-wide-connected"></i> Start Processing
+                                        <i class="bi bi-gear-wide-connected"></i> @L["StartProcessing"]
                                     </button>
                                 }
 
@@ -208,7 +208,7 @@
                                 {
                                     <button type="submit" asp-action="UpdateStatus" asp-route-id="@Model.Id" asp-route-status="@StaticDetails.StatusShipped"
                                             onclick="return validateInput()" class="btn btn-danger fw-semibold d-inline-flex align-items-center gap-2">
-                                        <i class="bi bi-truck"></i> Ship Order
+                                        <i class="bi bi-truck"></i> @L["ShipOrder"]
                                     </button>
                                 }
 
@@ -216,7 +216,7 @@
                                 {
                                     <button type="submit" asp-action="UpdateStatus" asp-route-id="@Model.Id" asp-route-status="@StaticDetails.StatusCancelled"
                                             class="btn btn-outline-danger fw-semibold d-inline-flex align-items-center gap-2">
-                                        <i class="bi bi-x-circle"></i> Cancel Order
+                                        <i class="bi bi-x-circle"></i> @L["CancelOrder"]
                                     </button>
                                 }
 
@@ -224,7 +224,7 @@
                                 {
                                     <button type="submit" asp-action="UpdateStatus" asp-route-id="@Model.Id" asp-route-status="@StaticDetails.StatusRefunded"
                                             class="btn btn-outline-secondary fw-semibold d-inline-flex align-items-center gap-2">
-                                        <i class="bi bi-arrow-counterclockwise"></i> Refund
+                                        <i class="bi bi-arrow-counterclockwise"></i> @L["Refund"]
                                     </button>
                                 }
                             }

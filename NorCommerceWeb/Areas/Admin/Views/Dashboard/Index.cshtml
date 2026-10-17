@@ -1,1 +1,256 @@
-﻿<h2>Hello Admin, welcome to the NorCommerce Dashboard! </h2>
+﻿@using NorCommerce.Utility
+@using NorCommerce.Models.ViewModels
+
+@model DashboardVM
+
+
+@{
+    ViewData["Title"] = L["Admin"].Value;
+}
+
+<!-- Header -->
+<div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+    <div>
+        <h1 class="h4 fw-bold mb-1" style="color:#13294B;">@L["Dashboard"]</h1>
+        <p class="text-secondary small mb-0">@L["DashboardWelcome"]</p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+        <span class="dash-chip"><i class="bi bi-calendar3"></i> @DateTime.Now.ToString("dd MMM yyyy")</span>
+        <a asp-area="Admin" asp-controller="Product" asp-action="Upsert" class="btn btn-sm fw-semibold text-white" style="background:#13294B;">
+            <i class="bi bi-plus-lg me-1"></i> @L["NewProduct"]
+        </a>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card dash-card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="dash-label">@L["Revenue"]</span>
+                    <span class="dash-icon" style="background:#E8EDF5;color:#13294B;"><i class="bi bi-cash-stack"></i></span>
+                </div>
+                <p class="dash-value mb-1">@Model.RevenueTotal.ToString("C")</p>
+                <p class="dash-sub mb-0">@L["FromApprovedOrders"]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="card dash-card dash-link h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="dash-label">@L["Orders"]</span>
+                    <span class="dash-icon" style="background:#E7F8EF;color:#15803D;"><i class="bi bi-receipt"></i></span>
+                </div>
+                <p class="dash-value mb-1">@Model.OrdersTotal</p>
+                <p class="dash-sub mb-0">@L["ViewAllOrders"] <i class="bi bi-arrow-right"></i></p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="card dash-card dash-link h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="dash-label">@L["Products"]</span>
+                    <span class="dash-icon" style="background:#FFF0F0;color:#FF6B6B;"><i class="bi bi-book"></i></span>
+                </div>
+                <p class="dash-value mb-1">@Model.ProductsTotal</p>
+                <p class="dash-sub mb-0">@L["ManageProducts"] <i class="bi bi-arrow-right"></i></p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <a asp-area="Admin" asp-controller="User" asp-action="Index" class="card dash-card dash-link h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="dash-label">@L["Users"]</span>
+                    <span class="dash-icon" style="background:#FFF4E5;color:#B45309;"><i class="bi bi-people"></i></span>
+                </div>
+                <p class="dash-value mb-1">@Model.UsersTotal</p>
+                <p class="dash-sub mb-0">@L["ManageUsers"] <i class="bi bi-arrow-right"></i></p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Charts Row 1 -->
+<div class="row g-3 mb-4">
+    <div class="col-lg-6">
+        <div class="card dash-card h-100">
+            <div class="card-header dash-card-header">
+                <span><i class="bi bi-graph-up-arrow me-2" style="color:#13294B;"></i>@L["RevenueTrend"]</span>
+                <span class="dash-chip">@L["Last6Months"]</span>
+            </div>
+            <div class="card-body">
+                <div style="height: 260px;">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card dash-card h-100">
+            <div class="card-header dash-card-header">
+                <span><i class="bi bi-bar-chart me-2" style="color:#15803D;"></i>@L["OrdersPerMonth"]</span>
+                <span class="dash-chip">@L["Last6Months"]</span>
+            </div>
+            <div class="card-body">
+                <div style="height: 260px;"><canvas id="ordersChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row 2 -->
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card dash-card h-100">
+            <div class="card-header dash-card-header">
+                <span><i class="bi bi-pie-chart me-2" style="color:#B45309;"></i>@L["OrderStatus"]</span>
+            </div>
+            <div class="card-body">
+                <div style="height: 220px;"><canvas id="statusChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card dash-card h-100">
+            <div class="card-header dash-card-header">
+                <span><i class="bi bi-tags me-2" style="color:#FF6B6B;"></i>@L["ProductsByCategory"]</span>
+            </div>
+            <div class="card-body">
+                <div style="height: 220px;"><canvas id="categoryChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const navy = '#13294B', coral = '#FF6B6B';
+
+        const monthLabels = @Html.Raw(Json.Serialize(Model.MonthLabels));
+        const monthlyOrders = @Html.Raw(Json.Serialize(Model.MonthlyOrders));
+        const monthlyRevenue = @Html.Raw(Json.Serialize(Model.MonthlyRevenue));
+        const statusLabels = @Html.Raw(Json.Serialize(Model.StatusLabels));
+        const statusCounts = @Html.Raw(Json.Serialize(Model.StatusCounts));
+        const categoryLabels = @Html.Raw(Json.Serialize(Model.CategoryLabels));
+        const categoryCounts = @Html.Raw(Json.Serialize(Model.CategoryCounts));
+
+        const txtRevenue = @Html.Raw(Json.Serialize(L["Revenue"].Value));
+        const txtOrders = @Html.Raw(Json.Serialize(L["Orders"].Value));
+        const txtProducts = @Html.Raw(Json.Serialize(L["Products"].Value));
+
+        Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+        Chart.defaults.color = '#6B7280';
+
+        const noLegend = { legend: { display: false } };
+        const grid = { color: '#F1F2F4' };
+
+        // 1. Revenue trend
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'line',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: txtRevenue,
+                    data: monthlyRevenue,
+                    borderColor: navy,
+                    backgroundColor: 'rgba(19, 41, 75, 0.08)',
+                    fill: true,
+                    tension: 0.35,
+                    pointBackgroundColor: navy
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    ...noLegend,
+                    tooltip: { callbacks: { label: c => c.parsed.y.toLocaleString('nb-NO', { style: 'currency', currency: 'NOK' }) } }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { beginAtZero: true, grid: grid, ticks: { callback: v => v.toLocaleString('nb-NO') + ' kr' } }
+                }
+            }
+        });
+
+        // 2. Orders per month
+        new Chart(document.getElementById('ordersChart'), {
+            type: 'bar',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: txtOrders,
+                    data: monthlyOrders,
+                    backgroundColor: coral,
+                    borderRadius: 6,
+                    maxBarThickness: 36
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: noLegend,
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { beginAtZero: true, grid: grid, ticks: { precision: 0 } }
+                }
+            }
+        });
+
+        // 3. Order status
+        const statusColors = {
+            'Pending': '#F59E0B',
+            'Approved': '#15803D',
+            'Processing': '#4338CA',
+            'Shipped': '#0369A1',
+            'Cancelled': '#C8102E',
+            'Refunded': '#9CA3AF'
+        };
+
+        new Chart(document.getElementById('statusChart'), {
+            type: 'doughnut',
+            data: {
+                labels: statusLabels,
+                datasets: [{
+                    data: statusCounts,
+                    backgroundColor: statusLabels.map(s => statusColors[s] ?? '#D1D5DB'),
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                cutout: '65%',
+                plugins: { legend: { position: 'right', labels: { usePointStyle: true, boxWidth: 8 } } }
+            }
+        });
+
+        // 4. Products by category
+        new Chart(document.getElementById('categoryChart'), {
+            type: 'bar',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    label: txtProducts,
+                    data: categoryCounts,
+                    backgroundColor: navy,
+                    borderRadius: 6,
+                    maxBarThickness: 22
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                maintainAspectRatio: false,
+                plugins: noLegend,
+                scales: {
+                    x: { beginAtZero: true, grid: grid, ticks: { precision: 0 } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+}
