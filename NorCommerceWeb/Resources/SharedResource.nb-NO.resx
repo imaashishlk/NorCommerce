@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+
+	<!-- Navbar -->
+	<data name="Home" xml:space="preserve"><value>Hjem</value></data>
+	<data name="MyOrders" xml:space="preserve"><value>Mine bestillinger</value></data>
+	<data name="Cart" xml:space="preserve"><value>Handlekurv</value></data>
+	<data name="Logout" xml:space="preserve"><value>Logg ut</value></data>
+	<data name="AdminDashboard" xml:space="preserve"><value>Adminpanel</value></data>
+	<data name="Login" xml:space="preserve"><value>Logg inn</value></data>
+	<data name="Register" xml:space="preserve"><value>Registrer deg</value></data>
+	<data name="ToggleNavigation" xml:space="preserve"><value>Vis/skjul meny</value></data>
+
+	<!-- Hero -->
+	<data name="HeroTag" xml:space="preserve"><value>Nyheter</value></data>
+	<data name="HeroTitle1" xml:space="preserve"><value>Din neste favorittbok</value></data>
+	<data name="HeroTitle2" xml:space="preserve"><value>venter</value></data>
+	<data name="HeroTitleHighlight" xml:space="preserve"><value>på deg.</value></data>
+	<data name="HeroSubtitle" xml:space="preserve"><value>Håndplukkede bøker fra Norge og verden. Bestill i dag, levert hjem til deg.</value></data>
+	<data name="ShopBooks" xml:space="preserve"><value>Handle bøker</value></data>
+	<data name="Categories" xml:space="preserve"><value>Kategorier</value></data>
+	<data name="Books" xml:space="preserve"><value>Bøker</value></data>
+	<data name="FastDelivery" xml:space="preserve"><value>Rask levering</value></data>
+	<data name="SecurePayment" xml:space="preserve"><value>Sikker betaling</value></data>
+	<data name="NewThisMonth" xml:space="preserve"><value>Nytt denne måneden</value></data>
+
+	<!-- Catalog (Home) -->
+	<data name="OurCollection" xml:space="preserve"><value>Vår samling</value></data>
+	<data name="CatalogSubtitle" xml:space="preserve"><value>Utforsk alle {0} bøkene i katalogen vår</value></data>
+	<data name="View" xml:space="preserve"><value>Se mer</value></data>
+	<data name="NoProductsAvailable" xml:space="preserve"><value>Ingen produkter tilgjengelig for øyeblikket.</value></data>
+
+	<!-- Footer -->
+	<data name="AllRightsReserved" xml:space="preserve"><value>Alle rettigheter forbeholdt.</value></data>
+	<data name="MadeWith" xml:space="preserve"><value>Laget med</value></data>
+	<data name="By" xml:space="preserve"><value>av</value></data>
+
+	<!-- Admin layout -->
+	<data name="AdminPanel" xml:space="preserve"><value>Adminpanel</value></data>
+	<data name="Admin" xml:space="preserve"><value>Admin</value></data>
+	<data name="Store" xml:space="preserve"><value>Butikk</value></data>
+	<data name="ToggleTheme" xml:space="preserve"><value>Bytt tema</value></data>
+
+	<!-- Admin sidebar -->
+	<data name="Overview" xml:space="preserve"><value>Oversikt</value></data>
+	<data name="Dashboard" xml:space="preserve"><value>Dashbord</value></data>
+	<data name="Commerce" xml:space="preserve"><value>Salg</value></data>
+	<data name="Orders" xml:space="preserve"><value>Bestillinger</value></data>
+	<data name="Products" xml:space="preserve"><value>Produkter</value></data>
+	<data name="Management" xml:space="preserve"><value>Administrasjon</value></data>
+	<data name="Users" xml:space="preserve"><value>Brukere</value></data>
+
+	<!-- Common -->
+	<data name="Cancel" xml:space="preserve"><value>Avbryt</value></data>
+	<data name="Edit" xml:space="preserve"><value>Rediger</value></data>
+	<data name="Delete" xml:space="preserve"><value>Slett</value></data>
+	<data name="Actions" xml:space="preserve"><value>Handlinger</value></data>
+	<data name="Filter" xml:space="preserve"><value>Filter</value></data>
+	<data name="All" xml:space="preserve"><value>Alle</value></data>
+	<data name="Total" xml:space="preserve"><value>Totalt</value></data>
+
+	<!-- Category -->
+	<data name="CategoriesSubtitle" xml:space="preserve"><value>Administrer produktkategoriene dine</value></data>
+	<data name="NewCategory" xml:space="preserve"><value>Ny kategori</value></data>
+	<data name="CategoryName" xml:space="preserve"><value>Kategorinavn</value></data>
+	<data name="DisplayOrder" xml:space="preserve"><value>Visningsrekkefølge</value></data>
+	<data name="BackToCategories" xml:space="preserve"><value>Tilbake til kategorier</value></data>
+	<data name="CreateCategory" xml:space="preserve"><value>Opprett kategori</value></data>
+	<data name="CreateCategorySubtitle" xml:space="preserve"><value>Legg til en ny kategori for produktene dine</value></data>
+	<data name="UpdateCategory" xml:space="preserve"><value>Oppdater kategori</value></data>
+	<data name="UpdateCategorySubtitle" xml:space="preserve"><value>Oppdater en eksisterende kategori for produktene dine</value></data>
+	<data name="DeleteCategory" xml:space="preserve"><value>Slett kategori</value></data>
+	<data name="DeleteCategorySubtitle" xml:space="preserve"><value>Slett en eksisterende kategori for produktene dine</value></data>
+	<data name="EnterCategoryName" xml:space="preserve"><value>Skriv inn kategorinavn</value></data>
+	<data name="EnterDisplayOrder" xml:space="preserve"><value>Skriv inn visningsrekkefølge</value></data>
+
+	<!-- Dashboard -->
+	<data name="DashboardWelcome" xml:space="preserve"><value>Velkommen tilbake. Her er det som skjer i butikken din.</value></data>
+	<data name="NewProduct" xml:space="preserve"><value>Nytt produkt</value></data>
+	<data name="Revenue" xml:space="preserve"><value>Inntekter</value></data>
+	<data name="FromApprovedOrders" xml:space="preserve"><value>Fra godkjente bestillinger</value></data>
+	<data name="ViewAllOrders" xml:space="preserve"><value>Se alle bestillinger</value></data>
+	<data name="ManageProducts" xml:space="preserve"><value>Administrer produkter</value></data>
+	<data name="ManageUsers" xml:space="preserve"><value>Administrer brukere</value></data>
+	<data name="RevenueTrend" xml:space="preserve"><value>Inntektsutvikling</value></data>
+	<data name="Last6Months" xml:space="preserve"><value>Siste 6 måneder</value></data>
+	<data name="OrdersPerMonth" xml:space="preserve"><value>Bestillinger per måned</value></data>
+	<data name="OrderStatus" xml:space="preserve"><value>Bestillingsstatus</value></data>
+	<data name="ProductsByCategory" xml:space="preserve"><value>Produkter per kategori</value></data>
+
+	<!-- Orders list -->
+	<data name="OrdersSubtitle" xml:space="preserve"><value>Administrer bestillingene dine</value></data>
+	<data name="StatusPending" xml:space="preserve"><value>Venter</value></data>
+	<data name="StatusInProcess" xml:space="preserve"><value>Under behandling</value></data>
+	<data name="StatusShipped" xml:space="preserve"><value>Sendt</value></data>
+	<data name="StatusCancelled" xml:space="preserve"><value>Kansellert</value></data>
+	<data name="StatusApproved" xml:space="preserve"><value>Godkjent</value></data>
+	<data name="StatusRefunded" xml:space="preserve"><value>Refundert</value></data>
+	<data name="Id" xml:space="preserve"><value>ID</value></data>
+	<data name="PhoneNumber" xml:space="preserve"><value>Telefonnummer</value></data>
+	<data name="OrderDate" xml:space="preserve"><value>Bestillingsdato</value></data>
+	<data name="OrderTotal" xml:space="preserve"><value>Totalbeløp</value></data>
+
+	<!-- Order details -->
+	<data name="BackToOrders" xml:space="preserve"><value>Tilbake til bestillinger</value></data>
+	<data name="Order" xml:space="preserve"><value>Bestilling</value></data>
+	<data name="PlacedOn" xml:space="preserve"><value>Bestilt</value></data>
+	<data name="ShippingAndTracking" xml:space="preserve"><value>Levering og sporing</value></data>
+	<data name="Name" xml:space="preserve"><value>Navn</value></data>
+	<data name="Phone" xml:space="preserve"><value>Telefon</value></data>
+	<data name="Address" xml:space="preserve"><value>Adresse</value></data>
+	<data name="City" xml:space="preserve"><value>Poststed</value></data>
+	<data name="State" xml:space="preserve"><value>Fylke</value></data>
+	<data name="PostalCode" xml:space="preserve"><value>Postnummer</value></data>
+	<data name="Email" xml:space="preserve"><value>E-post</value></data>
+	<data name="Carrier" xml:space="preserve"><value>Transportør</value></data>
+	<data name="Tracking" xml:space="preserve"><value>Sporingsnummer</value></data>
+	<data name="ShippingDate" xml:space="preserve"><value>Sendt dato</value></data>
+	<data name="UpdateOrderDetails" xml:space="preserve"><value>Oppdater bestillingsdetaljer</value></data>
+	<data name="OrderSummary" xml:space="preserve"><value>Oppsummering</value></data>
+	<data name="StartProcessing" xml:space="preserve"><value>Start behandling</value></data>
+	<data name="ShipOrder" xml:space="preserve"><value>Send bestilling</value></data>
+	<data name="CancelOrder" xml:space="preserve"><value>Kanseller bestilling</value></data>
+	<data name="Refund" xml:space="preserve"><value>Refunder</value></data>
+
+	<!-- Products list -->
+	<data name="ProductsSubtitle" xml:space="preserve"><value>Administrer produktene dine</value></data>
+	<data name="Title" xml:space="preserve"><value>Tittel</value></data>
+	<data name="Isbn" xml:space="preserve"><value>ISBN</value></data>
+	<data name="Author" xml:space="preserve"><value>Forfatter</value></data>
+	<data name="Price" xml:space="preserve"><value>Pris</value></data>
+	<data name="Category" xml:space="preserve"><value>Kategori</value></data>
+
+	<!-- Product upsert -->
+	<data name="BackToProducts" xml:space="preserve"><value>Tilbake til produkter</value></data>
+	<data name="CreateProduct" xml:space="preserve"><value>Opprett produkt</value></data>
+	<data name="UpdateExistingProduct" xml:space="preserve"><value>Oppdater eksisterende produkt</value></data>
+	<data name="AddProduct" xml:space="preserve"><value>Legg til produkt</value></data>
+	<data name="UpdateProduct" xml:space="preserve"><value>Oppdater produkt</value></data>
+	<data name="Description" xml:space="preserve"><value>Beskrivelse</value></data>
+	<data name="ListPrice" xml:space="preserve"><value>Listepris</value></data>
+	<data name="Price1To49" xml:space="preserve"><value>Pris (1-49)</value></data>
+	<data name="Price50Plus" xml:space="preserve"><value>Pris (50+)</value></data>
+	<data name="Price100Plus" xml:space="preserve"><value>Pris (100+)</value></data>
+	<data name="SelectCategory" xml:space="preserve"><value>--Velg en kategori--</value></data>
+	<data name="ChooseImage" xml:space="preserve"><value>Velg bilde</value></data>
+	<data name="ProductImagePreview" xml:space="preserve"><value>Forhåndsvisning av produktbilde</value></data>
+	<data name="ProductImage" xml:space="preserve"><value>Produktbilde</value></data>
+
+	<!-- Product details (customer) -->
+	<data name="Product" xml:space="preserve"><value>Produkt</value></data>
+	<data name="BackToAllBooks" xml:space="preserve"><value>Tilbake til alle bøker</value></data>
+	<data name="NoImageAvailable" xml:space="preserve"><value>Bilde ikke tilgjengelig</value></data>
+	<data name="Uncategorized" xml:space="preserve"><value>Uten kategori</value></data>
+	<data name="VolumeDiscounts" xml:space="preserve"><value>Mengderabatt</value></data>
+	<data name="Units1To50" xml:space="preserve"><value>1-50 stk.</value></data>
+	<data name="Units51To100" xml:space="preserve"><value>51-100 stk.</value></data>
+	<data name="Units100Plus" xml:space="preserve"><value>100+ stk.</value></data>
+	<data name="Save" xml:space="preserve"><value>Spar</value></data>
+	<data name="Best" xml:space="preserve"><value>Best</value></data>
+	<data name="Qty" xml:space="preserve"><value>Antall</value></data>
+	<data name="AddToCart" xml:space="preserve"><value>Legg i handlekurv</value></data>
+
+	<!-- Cart -->
+	<data name="ShoppingCart" xml:space="preserve"><value>Handlekurv</value></data>
+	<data name="ContinueShopping" xml:space="preserve"><value>Fortsett å handle</value></data>
+	<data name="YourItems" xml:space="preserve"><value>Dine varer</value></data>
+	<data name="ByAuthorEach" xml:space="preserve"><value>av {0} · {1} per stk.</value></data>
+	<data name="Remove" xml:space="preserve"><value>Fjern</value></data>
+	<data name="ShippingAddress" xml:space="preserve"><value>Leveringsadresse</value></data>
+	<data name="FullName" xml:space="preserve"><value>Fullt navn</value></data>
+	<data name="StreetAddress" xml:space="preserve"><value>Gateadresse</value></data>
+	<data name="County" xml:space="preserve"><value>Fylke</value></data>
+	<data name="Shipping" xml:space="preserve"><value>Frakt</value></data>
+	<data name="Free" xml:space="preserve"><value>Gratis</value></data>
+	<data name="PlaceOrder" xml:space="preserve"><value>Fullfør bestilling</value></data>
+	<data name="Secure" xml:space="preserve"><value>Sikker</value></data>
+	<data name="FreeShipping" xml:space="preserve"><value>Gratis frakt</value></data>
+	<data name="Returns" xml:space="preserve"><value>Retur</value></data>
+
+	<!-- Order confirmed -->
+	<data name="OrderConfirmation" xml:space="preserve"><value>Ordrebekreftelse</value></data>
+	<data name="OrderConfirmedTitle" xml:space="preserve"><value>Takk for bestillingen!</value></data>
+	<data name="OrderConfirmedText" xml:space="preserve"><value>Vi har mottatt bestillingen din og gjør den klar.</value></data>
+	<data name="OrderNumber" xml:space="preserve"><value>Ordrenummer</value></data>
+	<data name="ConfirmationSent" xml:space="preserve"><value>Bekreftelse sendt</value></data>
+	<data name="TrackingSoon" xml:space="preserve"><value>Sporing kommer snart</value></data>
+	<data name="ViewMyOrders" xml:space="preserve"><value>Se mine bestillinger</value></data>
+
+	<!-- Newsletter -->
+	<data name="StayUpdated" xml:space="preserve"><value>Hold deg oppdatert</value></data>
+	<data name="NewsletterText" xml:space="preserve"><value>Meld deg på nyhetsbrevet og få spesialtilbud, gratis gaver og eksklusive kampanjer.</value></data>
+	<data name="YourEmailAddress" xml:space="preserve"><value>Din e-postadresse</value></data>
+	<data name="Subscribe" xml:space="preserve"><value>Meld deg på</value></data>
+	<data name="WeRespectPrivacy" xml:space="preserve"><value>Vi tar personvernet ditt på alvor</value></data>
+
+	<!-- Privacy -->
+	<data name="PrivacyPolicy" xml:space="preserve"><value>Personvernerklæring</value></data>
+	<data name="PrivacyPolicyText" xml:space="preserve"><value>Bruk denne siden til å beskrive nettstedets personvernerklæring.</value></data>
+
+	<!-- Access denied -->
+	<data name="AccessDenied" xml:space="preserve"><value>Ingen tilgang</value></data>
+	<data name="PermissionRequired" xml:space="preserve"><value>Tilgang kreves</value></data>
+	<data name="AccessDeniedText" xml:space="preserve"><value>Du har ikke tilgang til denne siden.</value></data>
+	<data name="GoToHome" xml:space="preserve"><value>Gå til forsiden</value></data>
+
+	<!-- Login -->
+	<data name="WelcomeBack" xml:space="preserve"><value>Velkommen tilbake</value></data>
+	<data name="LoginToAccount" xml:space="preserve"><value>Logg inn på kontoen din</value></data>
+	<data name="Password" xml:space="preserve"><value>Passord</value></data>
+	<data name="EnterPassword" xml:space="preserve"><value>Skriv inn passordet ditt</value></data>
+	<data name="RememberMe" xml:space="preserve"><value>Husk meg</value></data>
+	<data name="LogIn" xml:space="preserve"><value>Logg inn</value></data>
+	<data name="ForgotPassword" xml:space="preserve"><value>Glemt passord?</value></data>
+	<data name="NoAccount" xml:space="preserve"><value>Har du ikke konto?</value></data>
+	<data name="RegisterNow" xml:space="preserve"><value>Registrer deg nå</value></data>
+
+	<!-- Register -->
+	<data name="CreateAccount" xml:space="preserve"><value>Opprett konto</value></data>
+	<data name="JoinUsToday" xml:space="preserve"><value>Bli med i dag</value></data>
+	<data name="SelectRole" xml:space="preserve"><value>-- Velg rolle --</value></data>
+	<data name="AlreadyHaveAccount" xml:space="preserve"><value>Har du allerede en konto?</value></data>
+	<data name="LogInLink" xml:space="preserve"><value>Logg inn</value></data>
+</root>

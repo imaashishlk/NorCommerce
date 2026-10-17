@@ -2,7 +2,7 @@
 @model ShoppingCart
 
 @{
-    ViewData["Title"] = "Product";
+    ViewData["Title"] = L["Product"].Value;
 }
 
 <div class="container py-4">
@@ -12,7 +12,7 @@
         <div class="mb-3">
             <!-- TODO: Add back link to Index page -->
             <a asp-action="Index" class="text-decoration-none text-secondary small fw-medium d-inline-flex align-items-center gap-1">
-                <i class="bi bi-arrow-left"></i> Back to all books
+                <i class="bi bi-arrow-left"></i> @L["BackToAllBooks"]
             </a>
         </div>
 
@@ -27,7 +27,7 @@
                     {
                         <div class="d-flex flex-column align-items-center justify-content-center w-100">
                             <i class="bi bi-book" style="font-size: 8rem; color: #8FA3C0;"></i>
-                            <p class="text-white-50 small mt-3">No Image Available</p>
+                            <p class="text-white-50 small mt-3">@L["NoImageAvailable"]</p>
                         </div>
                     }
                 </div>
@@ -35,19 +35,19 @@
                 <!-- Details -->
                 <div class="col-lg-7 p-4 p-lg-5">
                     <span class="badge mb-3" style="background: rgba(31,78,140,0.1); color: #1F4E8C;">
-                        <i class="bi bi-bookmark me-1"></i> 
+                        <i class="bi bi-bookmark me-1"></i>
                         @if (!string.IsNullOrEmpty(Model.Product.Category?.Name))
                         {
                             @Model.Product.Category?.Name
                         }
                         else
                         {
-                            <p>Uncategorized</p>
+                            <p>@L["Uncategorized"]</p>
                         }
                     </span>
                     <h1 class="h3 fw-bold mb-1">@Model.Product.Title</h1>
-                    <p class="text-secondary mb-2">by <span class="fw-medium text-dark">@Model.Product.Author</span></p>
-                    <p class="text-secondary small mb-4">ISBN: @Model.Product.ISBN</p>
+                    <p class="text-secondary mb-2">@L["By"] <span class="fw-medium text-dark">@Model.Product.Author</span></p>
+                    <p class="text-secondary small mb-4">@L["Isbn"]: @Model.Product.ISBN</p>
 
                     <div class="d-flex align-items-baseline gap-2 mb-4">
                         <span class="h3 fw-bold mb-0" style="color: #13294B;">@Model.Product.Price.ToString("c")</span>
@@ -57,27 +57,27 @@
                     <!-- Volume Discounts -->
                     <div class="border rounded p-3 mb-4 bg-light">
                         <p class="text-uppercase fw-bold text-secondary mb-3" style="font-size: 0.65rem; letter-spacing: 0.1em;">
-                            <i class="bi bi-stack me-1" style="color: #1F4E8C;"></i> Volume Discounts
+                            <i class="bi bi-stack me-1" style="color: #1F4E8C;"></i> @L["VolumeDiscounts"]
                         </p>
                         <div class="row g-2 text-center">
                             <div class="col-4">
                                 <div class="bg-white border rounded p-2 shadow-sm h-100 d-flex flex-column align-items-center justify-content-center">
-                                    <p class="text-uppercase text-secondary mb-1" style="font-size: 0.6rem; font-weight: 700;">1-50 Units</p>
+                                    <p class="text-uppercase text-secondary mb-1" style="font-size: 0.6rem; font-weight: 700;">@L["Units1To50"]</p>
                                     <p class="fw-bold mb-0" style="color: #13294B;">@Model.Product.Price.ToString("c")</p>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="bg-white border rounded p-2 shadow-sm h-100 d-flex flex-column align-items-center justify-content-center" style="border-color: rgba(31,78,140,0.35) !important;">
-                                    <p class="text-uppercase text-secondary mb-1" style="font-size: 0.6rem; font-weight: 700;">51-100 Units</p>
+                                    <p class="text-uppercase text-secondary mb-1" style="font-size: 0.6rem; font-weight: 700;">@L["Units51To100"]</p>
                                     <p class="fw-bold mb-0" style="color: #13294B;">@Model.Product.Price50.ToString("c")</p>
-                                    <span class="badge mt-1" style="font-size: 0.55rem; background: rgba(31,78,140,0.1); color: #1F4E8C;">SAVE</span>
+                                    <span class="badge mt-1" style="font-size: 0.55rem; background: rgba(31,78,140,0.1); color: #1F4E8C;">@L["Save"]</span>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="bg-white border rounded p-2 shadow-sm h-100 d-flex flex-column align-items-center justify-content-center" style="border-color: #C8102E !important;">
-                                    <p class="text-uppercase text-secondary mb-1" style="font-size: 0.6rem; font-weight: 700;">100+ Units</p>
+                                    <p class="text-uppercase text-secondary mb-1" style="font-size: 0.6rem; font-weight: 700;">@L["Units100Plus"]</p>
                                     <p class="fw-bold mb-0" style="color: #13294B;">@Model.Product.Price100.ToString("c")</p>
-                                    <span class="badge text-white mt-1" style="font-size: 0.55rem; background: #C8102E;">BEST</span>
+                                    <span class="badge text-white mt-1" style="font-size: 0.55rem; background: #C8102E;">@L["Best"]</span>
                                 </div>
                             </div>
                         </div>
@@ -89,12 +89,12 @@
 
                     <div class="d-flex align-items-center gap-2">
                         <div class="input-group" style="width: 140px;">
-                            <span class="input-group-text fw-semibold small" style="background: #13294B; color: #fff;">Qty</span>
+                            <span class="input-group-text fw-semibold small" style="background: #13294B; color: #fff;">@L["Qty"]</span>
                             <!-- TODO: Bind quantity input to model -->
                             <input type="number" asp-for="Count" class="form-control text-center fw-medium" />
                         </div>
                         <button type="submit" class="btn btn-accent flex-grow-1 fw-semibold py-2">
-                            <i class="bi bi-cart-plus me-1"></i> Add to Cart
+                            <i class="bi bi-cart-plus me-1"></i> @L["AddToCart"]
                         </button>
                     </div>
                 </div>

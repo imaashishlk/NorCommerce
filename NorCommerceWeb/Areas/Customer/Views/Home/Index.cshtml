@@ -2,15 +2,15 @@
 @model IEnumerable<Product>
 
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = L["Home"].Value;
 }
 
 <partial name="_Hero" />
 
 <div class="container py-5" id="catalog">
     <div class="mb-4">
-        <h2 class="fw-bold mb-1" style="color: #13294B;">Our Collection</h2>
-        <p class="text-secondary mb-0">Explore all @Model.Count() books in our catalog</p>
+        <h2 class="fw-bold mb-1" style="color: #13294B;">@L["OurCollection"]</h2>
+        <p class="text-secondary mb-0">@L["CatalogSubtitle", Model.Count()]</p>
     </div>
 
     <!-- Books Grid -->
@@ -43,7 +43,7 @@
                                     @product.Title
                                 </a>
                             </h6>
-                            <p class="text-secondary small mb-2">by @product.Author</p>
+                            <p class="text-secondary small mb-2">@L["By"] @product.Author</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <span class="fw-bold" style="color: #13294D;">@product.Price.ToString("c")</span>
@@ -53,7 +53,7 @@
                                     }
                                 </div>
                                 <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-sm btn-outline-dark">
-                                    View
+                                    @L["View"]
                                 </a>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
         }
         else
         {
-            <p>No products available at the moment.</p>
+            <p>@L["NoProductsAvailable"]</p>
         }
 
     </div>

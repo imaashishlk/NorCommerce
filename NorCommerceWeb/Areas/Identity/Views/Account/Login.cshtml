@@ -2,7 +2,7 @@
 @model LoginVM
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = L["Login"].Value;
 }
 
 <div class="container">
@@ -11,8 +11,8 @@
             <div class="card shadow-sm border overflow-hidden">
                 <div class="card-header text-white py-3 px-4 text-center" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
                     <i class="bi bi-box-arrow-in-right display-4"></i>
-                    <h4 class="fw-bold mt-2 mb-1">Welcome Back</h4>
-                    <p class="mb-0 small" style="color: #A9C1E3;">Log in to your account</p>
+                    <h4 class="fw-bold mt-2 mb-1">@L["WelcomeBack"]</h4>
+                    <p class="mb-0 small" style="color: #A9C1E3;">@L["LoginToAccount"]</p>
                 </div>
 
                 <div class="card-body p-5">
@@ -25,29 +25,29 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-semibold small" asp-for="Password">Password</label>
-                            <input type="password" asp-for="Password" class="form-control form-control-lg" placeholder="Enter your password" />
+                            <label class="form-label fw-semibold small" asp-for="Password">@L["Password"]</label>
+                            <input type="password" asp-for="Password" class="form-control form-control-lg" placeholder="@L["EnterPassword"]" />
                             <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
 
                         <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" asp-for="RememberMe" />
-                            <label class="form-check-label" asp-for="RememberMe">Remember me?</label>
+                            <label class="form-check-label" asp-for="RememberMe">@L["RememberMe"]</label>
                         </div>
 
                         <button type="submit" class="btn btn-accent btn-lg w-100 mb-3">
-                            <i class="bi bi-box-arrow-in-right me-2"></i>Log In
+                            <i class="bi bi-box-arrow-in-right me-2"></i>@L["LogIn"]
                         </button>
 
                         <div class="text-center">
-                            <a href="#" class="text-decoration-none" style="color: #1F4E8C;">Forgot your password?</a>
+                            <a href="#" class="text-decoration-none" style="color: #1F4E8C;">@L["ForgotPassword"]</a>
                         </div>
                     </form>
 
                     <hr class="my-4" />
 
                     <div class="text-center">
-                        <p class="mb-0">Don't have an account? <a asp-controller="Account" asp-action="Register" asp-route-returnURL="@ViewData["ReturnURL"]" class="fw-semibold text-decoration-none" style="color: #C8102E;">Register now</a></p>
+                        <p class="mb-0">@L["NoAccount"] <a asp-controller="Account" asp-action="Register" asp-route-returnURL="@ViewData["ReturnURL"]" class="fw-semibold text-decoration-none" style="color: #C8102E;">@L["RegisterNow"]</a></p>
                     </div>
                 </div>
             </div>

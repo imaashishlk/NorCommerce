@@ -1,34 +1,33 @@
 ﻿@model List<NorCommerce.Models.Product>
 
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = L["Products"].Value;
 }
 
 <div class="container-fluid py-4">
     <div class="card border shadow-sm overflow-hidden">
         <div class="card-header text-white py-3 px-4 d-flex align-items-center justify-content-between" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
             <div>
-                <h5 class="mb-0 fw-bold"><i class="bi bi-grid me-2"></i>Products</h5>
-                <p class="mb-0 small" style="color: #A9C1E3;">Manage your Products</p>
+                <h5 class="mb-0 fw-bold"><i class="bi bi-grid me-2"></i>@L["Products"]</h5>
+                <p class="mb-0 small" style="color: #A9C1E3;">@L["ProductsSubtitle"]</p>
             </div>
             <a asp-controller="Product" asp-action="Upsert" class="btn btn-sm btn-outline-light fw-semibold d-inline-flex align-items-center gap-1">
-                <i class="bi bi-plus-lg"></i> New Product
+                <i class="bi bi-plus-lg"></i> @L["NewProduct"]
             </a>
         </div>
         <div class="table-responsive p-3">
             <table class="table-styled" id="productTable">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>ISBN</th>
-                        <th>Author</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>Actions</th>
+                        <th>@L["Title"]</th>
+                        <th>@L["Isbn"]</th>
+                        <th>@L["Author"]</th>
+                        <th>@L["Price"]</th>
+                        <th>@L["Category"]</th>
+                        <th>@L["Actions"]</th>
                     </tr>
                 </thead>
                 <tbody>
-
                 </tbody>
             </table>
         </div>
@@ -36,6 +35,6 @@
 </div>
 
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/productIndex.js" asp-append-version="true"></script>
 }

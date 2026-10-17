@@ -28,6 +28,7 @@ builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 // Stripe: Scoped
 builder.Services.AddScoped<Stripe.Checkout.SessionService>();
@@ -62,11 +63,14 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
+// Localizaton with resources
+builder.Services.AddLocalization(o => o.ResourcesPath = "Resources");
+
 // Securing entire application with AutoValidateAntiforgeryTokenAttribute
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-});
+}).AddViewLocalization();
 
 var app = builder.Build();
 
@@ -96,17 +100,15 @@ if (!app.Environment.IsDevelopment())
 StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 // Setting app culture
-var culture = new CultureInfo("nb-NO");
+var norwegian = new CultureInfo("nb-NO");
+var english = new CultureInfo("en");
 
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
-    DefaultRequestCulture = new RequestCulture(culture),
-    SupportedCultures = new[] { culture },
-    SupportedUICultures = new[] { culture }
+    DefaultRequestCulture = new RequestCulture(culture: norwegian, uiCulture: norwegian),
+    SupportedCultures = new[] { norwegian },            // kr, dates stay Norwegian
+    SupportedUICultures = new[] { norwegian, english }  // text: NO or EN
 });
-
-CultureInfo.DefaultThreadCurrentCulture = culture;
-CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 app.UseHttpsRedirection();
 app.UseRouting();

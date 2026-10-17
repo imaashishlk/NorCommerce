@@ -1,7 +1,7 @@
 ﻿@model int
 
 @{
-    ViewData["Title"] = "Order Confirmation";
+    ViewData["Title"] = L["OrderConfirmation"].Value;
 }
 
 <div class="d-flex align-items-center justify-content-center py-5" style="min-height: 70vh;">
@@ -10,30 +10,30 @@
             <i class="bi bi-check-lg display-5 text-white"></i>
         </div>
 
-        <h1 class="h3 fw-bold mb-2">Order Confirmed!</h1>
-        <p class="text-secondary mb-4">Thank you for your purchase. We're preparing your order.</p>
+        <h1 class="h3 fw-bold mb-2">@L["OrderConfirmedTitle"]</h1>
+        <p class="text-secondary mb-4">@L["OrderConfirmedText"]</p>
 
         <div class="card border shadow-sm overflow-hidden mb-4">
             <div class="card-header text-white py-2 text-center" style="background: linear-gradient(to right, #1F4E8C, #13294B, #0C1C33);">
-                <p class="text-uppercase fw-semibold mb-0" style="font-size: 0.65rem; letter-spacing: 0.1em;">Order Number</p>
+                <p class="text-uppercase fw-semibold mb-0" style="font-size: 0.65rem; letter-spacing: 0.1em;">@L["OrderNumber"]</p>
             </div>
             <div class="card-body py-4">
                 <span class="display-6 fw-bold" style="color: #13294B;">@Model</span>
             </div>
             <div class="card-footer bg-light">
                 <div class="d-flex justify-content-center gap-4 small text-secondary">
-                    <span><i class="bi bi-envelope me-1"></i> Confirmation sent</span>
-                    <span><i class="bi bi-truck me-1"></i> Tracking available soon</span>
+                    <span><i class="bi bi-envelope me-1"></i> @L["ConfirmationSent"]</span>
+                    <span><i class="bi bi-truck me-1"></i> @L["TrackingSoon"]</span>
                 </div>
             </div>
         </div>
 
         <div class="d-grid gap-2">
             <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-accent fw-semibold">
-                <i class="bi bi-box me-1"></i> View My Orders
+                <i class="bi bi-box me-1"></i> @L["ViewMyOrders"]
             </a>
             <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary fw-semibold">
-                <i class="bi bi-house me-1"></i> Continue Shopping
+                <i class="bi bi-house me-1"></i> @L["ContinueShopping"]
             </a>
         </div>
     </div>

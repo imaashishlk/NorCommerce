@@ -1,4 +1,10 @@
 ﻿@using NorCommerce.Utility
+
+@{
+    var isNorwegian = System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("nb");
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,20 +32,20 @@
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                        aria-expanded="false" aria-label="@L["ToggleNavigation"]">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">@L["Home"]</a>
                         </li>
 
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">
-                                    <i class="bi bi-box-seam me-1"></i> My Orders
+                                    <i class="bi bi-box-seam me-1"></i> @L["MyOrders"]
                                 </a>
                             </li>
                         }
@@ -49,7 +55,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                                    <i class="bi bi-speedometer2"></i> Admin Dashboard
+                                    <i class="bi bi-speedometer2"></i> @L["AdminDashboard"]
                                 </a>
                             </li>
                         }
@@ -66,10 +72,29 @@
                                 <i class="bi bi-cart2" style="font-size: 1rem; color: #e5e7eb;"></i>
                             </div>
                             <div class="d-flex flex-column" style="line-height: 1.2;">
-                                <span style="font-size: 0.65rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px;">Cart</span>
+                                <span style="font-size: 0.65rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px;">@L["Cart"]</span>
                                 <span class="cart-count" style="font-size: 0.85rem; color: #fff; font-weight: 600; transition: all 0.3s ease;">@await Component.InvokeAsync("CartCount")</span>
                             </div>
                         </a>
+                        <li class="nav-item">
+                            <form asp-area="Customer" asp-controller="Home" asp-action="SetLanguage" method="post"
+                                  class="d-flex align-items-center rounded-pill p-1"
+                                  style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);">
+                                <input type="hidden" name="returnUrl" value="@returnUrl" />
+
+                                <button type="submit" name="culture" value="en"
+                                        class="btn btn-sm rounded-pill px-3 py-0 fw-semibold border-0"
+                                        style="font-size: .75rem; @(isNorwegian ? "color:#9ca3af;" : "background:#fff;color:#13294B;")">
+                                    EN
+                                </button>
+
+                                <button type="submit" name="culture" value="nb-NO"
+                                        class="btn btn-sm rounded-pill px-3 py-0 fw-semibold border-0"
+                                        style="font-size: .75rem; @(isNorwegian ? "background:#fff;color:#13294B;" : "color:#9ca3af;")">
+                                    NO
+                                </button>
+                            </form>
+                        </li>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item dropdown">
@@ -82,7 +107,7 @@
                                     <li>
                                         <form asp-area="Identity" asp-controller="Account" asp-action="Logout" method="post">
                                             <button type="submit" class="dropdown-item d-flex align-items-center gap-2">
-                                                <i class="bi bi-box-arrow-right" style="color: #C8102E;"></i> Logout
+                                                <i class="bi bi-box-arrow-right" style="color: #C8102E;"></i> @L["Logout"]
                                             </button>
                                         </form>
                                     </li>
@@ -92,10 +117,10 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+                                <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">@L["Login"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-sm btn-accent fw-semibold" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+                                <a class="btn btn-sm btn-accent fw-semibold" asp-area="Identity" asp-controller="Account" asp-action="Register">@L["Register"]</a>
                             </li>
                         }
 
@@ -125,8 +150,8 @@
                     </div>
                 </div>
                 <div class="col-sm-4 text-center">
-                    <p class="mb-0 text-white-50 small">&copy; @DateTime.Now.Year NorCommerce. All rights reserved.</p>
-                    <p class="mb-0 text-white-50" style="font-size: 0.75rem;">Made with <i class="bi bi-heart mx-1" style="color: #FF6B6B;"></i> by aashish</p>
+                    <p class="mb-0 text-white-50 small">&copy; @DateTime.Now.Year NorCommerce. 	@L["AllRightsReserved"]</p>
+                    <p class="mb-0 text-white-50" style="font-size: 0.75rem;">@L["MadeWith"] <i class="bi bi-heart mx-1" style="color: #FF6B6B;"></i> @L["By"] aashish</p>
                 </div>
                 <div class="col-sm-4 d-flex justify-content-sm-end justify-content-center gap-2">
                     <a href="#" class="btn btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: rgba(255,255,255,0.08);">
