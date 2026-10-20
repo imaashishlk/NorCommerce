@@ -1,23 +1,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NorCommerce.Business.Services;
 using NorCommerce.Business.Services.IServices;
 using NorCommerce.DataAccess.Data;
+using NorCommerce.DataAccess.Seed;
 using NorCommerce.Models;
 using NorCommerce.Utility;
 using Stripe;
-using ProductService = NorCommerce.Business.Services.ProductService;
 using System.Globalization;
-using Microsoft.AspNetCore.Localization;
+using ProductService = NorCommerce.Business.Services.ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-var test = builder.Configuration.GetConnectionString("SQLConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
@@ -86,6 +82,17 @@ using (var scope = app.Services.CreateScope())
             await roleManager.CreateAsync(new ApplicationRole(role));
         }
     }
+}
+
+// Seeding demo data (Development only)
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+    await DevDataSeeder.SeedAsync(db, userManager, logger);
 }
 
 // Configure the HTTP request pipeline.
