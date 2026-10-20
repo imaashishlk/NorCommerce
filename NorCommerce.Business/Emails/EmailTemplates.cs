@@ -38,7 +38,7 @@ namespace NorCommerce.Business.Emails
                 <tr>
                   <td style=""background:{DarkNavy};padding:16px 24px;color:#9ca3af;font-size:12px;"">
                     <strong style=""color:#ffffff;"">NorCommerce</strong> &middot; Alt du trenger<br/>
-                    This is an automatic email. Please do not reply.
+                    Dette er en automatisk e-post. Vennligst ikke svar på denne.
                   </td>
                 </tr>
               </table>
@@ -59,23 +59,23 @@ namespace NorCommerce.Business.Emails
             }
 
             var body = $@"
-                <p>Hi {WebUtility.HtmlEncode(order.Name)},</p>
-                <p>Thank you for your order. We have received it and will start processing it soon.</p>
+                <p>Hei {WebUtility.HtmlEncode(order.Name)},</p>
+                <p>Takk for bestillingen! Vi har mottatt den og begynner å behandle den snart.</p>
 
-                <p style=""margin:16px 0 8px;""><strong>Order #{order.Id}</strong><br/>
+                <p style=""margin:16px 0 8px;""><strong>Ordrenummer #{order.Id}</strong><br/>
                 <span style=""color:{Muted};"">{order.OrderDate:dd.MM.yyyy HH:mm}</span></p>
 
                 <table width=""100%"" style=""border-collapse:collapse;font-size:14px;"">
                   {rows}
                   <tr>
-                    <td style=""padding:12px 0;font-weight:bold;"">Total</td>
+                    <td style=""padding:12px 0;font-weight:bold;"">Totalt</td>
                     <td style=""padding:12px 0;font-weight:bold;text-align:right;color:{Red};"">{order.OrderTotal:C}</td>
                   </tr>
                 </table>
 
-                <p style=""margin-top:16px;"">We will send you another email when your order ships.</p>";
+                <p style=""margin-top:16px;"">Du får en ny e-post når bestillingen er sendt.</p>";
 
-            return Layout("Order confirmed", body);
+            return Layout("Bestillingen er bekreftet", body);
         }
 
         public static string OrderCancelledRefunded(OrderHeader order, IEnumerable<OrderDetails> items)
@@ -92,36 +92,36 @@ namespace NorCommerce.Business.Emails
             }
 
             var body = $@"
-                <p>Hi {WebUtility.HtmlEncode(order.Name)},</p>
-                <p>Your order has been cancelled and a refund has been initiated. Thank you for shopping with us.</p>
+                <p>Hei {WebUtility.HtmlEncode(order.Name)},</p>
+                <p>Bestillingen din er kansellert, og vi har startet tilbakebetalingen. Takk for at du handlet hos oss.</p>
 
-                <p style=""margin:16px 0 8px;""><strong>Order #{order.Id}</strong><br/>
+                <p style=""margin:16px 0 8px;""><strong>Ordrenummer #{order.Id}</strong><br/>
                 <span style=""color:{Muted};"">{order.OrderDate:dd.MM.yyyy HH:mm}</span></p>
 
                 <table width=""100%"" style=""border-collapse:collapse;font-size:14px;"">
                   {rows}
                   <tr>
-                    <td style=""padding:12px 0;font-weight:bold;"">Total</td>
+                    <td style=""padding:12px 0;font-weight:bold;"">Refundert beløp</td>
                     <td style=""padding:12px 0;font-weight:bold;text-align:right;color:{Red};"">{order.OrderTotal:C}</td>
                   </tr>
                 </table>
 
-                <p style=""margin-top:16px;"">We will send you another email when your order ships.</p>";
+                <p style=""margin-top:16px;"">Beløpet blir vanligvis synlig på kontoen din innen 5 til 10 virkedager.</p>";
 
-            return Layout("Order confirmed", body);
+            return Layout("Bestillingen er kansellert", body);
         }
 
         public static string OrderShipped(OrderHeader order)
         {
             var body = $@"
-                <p>Hi {WebUtility.HtmlEncode(order.Name)},</p>
-                <p>Your order <strong>#{order.Id}</strong> is on its way.</p>
+                <p>Hei {WebUtility.HtmlEncode(order.Name)},</p>
+                <p>Bestillingen din <strong>#{order.Id}</strong> er på vei.</p>
                 <table style=""font-size:14px;margin-top:8px;"">
-                  <tr><td style=""color:{Muted};padding-right:16px;"">Carrier</td><td>{WebUtility.HtmlEncode(order.Carrier)}</td></tr>
-                  <tr><td style=""color:{Muted};padding-right:16px;"">Tracking</td><td>{WebUtility.HtmlEncode(order.TrackingNumber)}</td></tr>
+                  <tr><td style=""color:{Muted};padding-right:16px;"">Transportør</td><td>{WebUtility.HtmlEncode(order.Carrier)}</td></tr>
+                  <tr><td style=""color:{Muted};padding-right:16px;"">Sporingsnummer</td><td>{WebUtility.HtmlEncode(order.TrackingNumber)}</td></tr>
                 </table>";
 
-            return Layout("Your order has shipped", body);
+            return Layout("Bestillingen din er sendt", body);
         }
     }
 }
