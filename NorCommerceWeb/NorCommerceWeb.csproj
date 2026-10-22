@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\NorCommerce.Infrastructure.csproj" />
+    <ProjectReference Include="..\NorCommerce.Infrastructure\NorCommerce.Infrastructure.csproj" />
     <ProjectReference Include="..\NorCommerce.Business\NorCommerce.Business.csproj" />
     <ProjectReference Include="..\NorCommerce.DataAccess\NorCommerce.DataAccess.csproj" />
   </ItemGroup>
