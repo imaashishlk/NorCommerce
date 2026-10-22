@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\NorCommerce.Infrastructure.csproj" />
     <ProjectReference Include="..\NorCommerce.Business\NorCommerce.Business.csproj" />
     <ProjectReference Include="..\NorCommerce.DataAccess\NorCommerce.DataAccess.csproj" />
   </ItemGroup>

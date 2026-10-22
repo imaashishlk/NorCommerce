@@ -15,5 +15,6 @@ namespace NorCommerce.Models
         public string? State { get; set; }
         public string? PostalCode { get; set; }
         public ICollection<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
+        public int? TripletexCustomerId { get; set; }
     }
 }

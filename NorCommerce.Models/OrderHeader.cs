@@ -49,5 +49,11 @@ namespace NorCommerce.Models
 
         // Navigation Property (1:M)
         public List<OrderDetails> OrderDetails { get; set; }
+
+        // Account Book sync
+        public int? AccountBookOrderId { get; set; }
+        public int? AccountBookInvoiceId { get; set; }
+        public int? InvoiceNumber { get; set; }
+        public bool InvoiceEmailSent { get; set; }
     }
 }

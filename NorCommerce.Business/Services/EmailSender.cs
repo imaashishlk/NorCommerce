@@ -3,6 +3,7 @@ using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
+using NorCommerce.Business.Services.IServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace NorCommerce.Business.Services
 {
-    public class EmailSender : IEmailSender
+    public class EmailSender : IEmailSender, IAttachmentEmailSender
     {
         private readonly IConfiguration _config;
 
@@ -19,13 +20,21 @@ namespace NorCommerce.Business.Services
             _config = config;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
+                    => SendEmailAsync(email, subject, htmlMessage, null, null);
+
+        public async Task SendEmailAsync(string email, string subject, string htmlMessage, string? fileName, byte[]? file)
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("NorCommerce", _config["Email:From"]!));
             message.To.Add(MailboxAddress.Parse(email));
             message.Subject = subject;
-            message.Body = new TextPart("html") { Text = htmlMessage };
+
+            // HTML + optional attachment
+            var body = new BodyBuilder { HtmlBody = htmlMessage };
+            if (file != null && fileName != null) body.Attachments.Add(fileName, file);
+
+            message.Body = body.ToMessageBody();
 
             using var client = new SmtpClient();
             await client.ConnectAsync(_config["Email:Host"]!, int.Parse(_config["Email:Port"]!), SecureSocketOptions.StartTls);
