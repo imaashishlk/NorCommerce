@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="Infrastructure/NorCommerce.Infrastructure.csproj" Id="7b6e03fb-dd80-4439-b8b2-7d8d0ee4b45b" />
   <Project Path="NorCommerce.Business/NorCommerce.Business.csproj" />
   <Project Path="NorCommerce.DataAccess/NorCommerce.DataAccess.csproj" />
   <Project Path="NorCommerce.Models/NorCommerce.Models.csproj" />

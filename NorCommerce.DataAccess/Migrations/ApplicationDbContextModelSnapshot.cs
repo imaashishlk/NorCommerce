@@ -201,6 +201,9 @@ namespace NorCommerce.DataAccess.Migrations
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TripletexCustomerId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -314,6 +317,12 @@ namespace NorCommerce.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AccountBookInvoiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AccountBookOrderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -324,6 +333,12 @@ namespace NorCommerce.DataAccess.Migrations
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("InvoiceEmailSent")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("InvoiceNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

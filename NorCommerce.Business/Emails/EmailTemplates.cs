@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Globalization;
 
 namespace NorCommerce.Business.Emails
 {
@@ -16,6 +17,9 @@ namespace NorCommerce.Business.Emails
         private const string Text = "#111827";
         private const string Muted = "#6b7280";
         private const string Border = "#e5e7eb";
+
+        private static readonly CultureInfo Nok = new("nb-NO");
+        private static string Kr(double amount) => amount.ToString("C", Nok);
 
 
         // Common Email Templates
@@ -54,7 +58,7 @@ namespace NorCommerce.Business.Emails
                 rows.Append($@"
                     <tr>
                       <td style=""padding:8px 0;border-bottom:1px solid {Border};"">{WebUtility.HtmlEncode(item.Product.Title)} x {item.Count}</td>
-                      <td style=""padding:8px 0;border-bottom:1px solid {Border};text-align:right;"">{(item.Price * item.Count):C}</td>
+                      <td style=""padding:8px 0;border-bottom:1px solid {Border};text-align:right;"">{(item.Price * item.Count)}</td>
                     </tr>");
             }
 
@@ -87,7 +91,7 @@ namespace NorCommerce.Business.Emails
                 rows.Append($@"
                     <tr>
                       <td style=""padding:8px 0;border-bottom:1px solid {Border};"">{WebUtility.HtmlEncode(item.Product.Title)} x {item.Count}</td>
-                      <td style=""padding:8px 0;border-bottom:1px solid {Border};text-align:right;"">{(item.Price * item.Count):C}</td>
+                      <td style=""padding:8px 0;border-bottom:1px solid {Border};text-align:right;"">{(item.Price * item.Count)}</td>
                     </tr>");
             }
 
@@ -122,6 +126,23 @@ namespace NorCommerce.Business.Emails
                 </table>";
 
             return Layout("Bestillingen din er sendt", body);
+        }
+        public static string InvoiceReady(OrderHeader order)
+        {
+            var body = $@"
+                <p>Hei {WebUtility.HtmlEncode(order.Name)},</p>
+                <p>Takk for handelen! Fakturaen for bestillingen din er klar og ligger vedlagt som PDF.</p>
+
+                <table style=""font-size:14px;margin-top:8px;"">
+                  <tr><td style=""color:{Muted};padding-right:16px;"">Fakturanummer</td><td><strong>#{order.InvoiceNumber}</strong></td></tr>
+                  <tr><td style=""color:{Muted};padding-right:16px;"">Ordrenummer</td><td>#{order.Id}</td></tr>
+                  <tr><td style=""color:{Muted};padding-right:16px;"">Ordredato</td><td>{order.OrderDate:dd.MM.yyyy}</td></tr>
+                  <tr><td style=""color:{Muted};padding-right:16px;"">Totalt</td><td style=""font-weight:bold;color:{Red};"">{Kr(order.OrderTotal)}</td></tr>
+                </table>
+
+                <p style=""margin-top:16px;"">Ta vare på fakturaen for dine egne arkiver.</p>";
+
+            return Layout($"Faktura #{order.InvoiceNumber}", body);
         }
     }
 }

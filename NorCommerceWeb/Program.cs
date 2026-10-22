@@ -7,8 +7,10 @@ using NorCommerce.Business.Services;
 using NorCommerce.Business.Services.IServices;
 using NorCommerce.DataAccess.Data;
 using NorCommerce.DataAccess.Seed;
+using NorCommerce.Infrastructure.Tripletex;
 using NorCommerce.Models;
 using NorCommerce.Utility;
+using NorCommerceWeb.Workers;
 using Stripe;
 using System.Globalization;
 using ProductService = NorCommerce.Business.Services.ProductService;
@@ -25,6 +27,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IAttachmentEmailSender, EmailSender>();
 
 // Stripe: Scoped
 builder.Services.AddScoped<Stripe.Checkout.SessionService>();
@@ -67,6 +70,17 @@ builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 }).AddViewLocalization();
+
+// Tripletex configure
+builder.Services.Configure<TripletexOptions>(
+    builder.Configuration.GetSection("Tripletex"));
+// Singelton, since we want the same to be accessed, object creation single
+builder.Services.AddSingleton<TripletexSessionStore>();
+builder.Services.AddHttpClient<IAccountingClient, TripletexClient>();
+builder.Services.AddScoped<IAccountingService, AccountingService>();
+
+// Background Service
+builder.Services.AddHostedService<AccountingSyncWorker>();
 
 var app = builder.Build();
 
