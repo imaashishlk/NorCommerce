@@ -12,8 +12,11 @@ A bilingual (Norwegian / English) online bookstore with Stripe payments and auto
 
 > Free Azure tier. The first visit can take 20 to 40 seconds while the app wakes up.
 
-![NorCommerce store](<img width="1076" height="587" alt="image" src="https://github.com/user-attachments/assets/16bf4a2c-d4bb-4b61-8dbb-e94ac88e5f95" />
-)
+<p align="center">
+  <a href="https://github.com/user-attachments/assets/16bf4a2c-d4bb-4b61-8dbb-e94ac88e5f95">
+    <img src="https://github.com/user-attachments/assets/16bf4a2c-d4bb-4b61-8dbb-e94ac88e5f95" alt="NorCommerce store" width="750" />
+  </a>
+</p>
 
 ---
 
@@ -84,7 +87,7 @@ Controllers stay thin. Services are injected through interfaces (`IOrderService`
 Key decisions:
 - **Save after every step** (`AccountBookOrderId`, `AccountBookInvoiceId`, `InvoiceEmailSent`), so a retry picks up at the failed step
 - **One DI scope and one `try/catch` per order**, so one failing order does not block the rest
-- **Token cached** in a singleton and refreshed only before it expires
+- **Token cached** in a singleton and refreshed only when it expires
 - **Typed `HttpClient`** and the **Options pattern** for configuration
 - **`SyncFromDate` setting**, so seeded history is never sent to Tripletex
 
